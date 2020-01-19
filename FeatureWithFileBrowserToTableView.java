@@ -2,7 +2,10 @@
 package featurewithfilebrowsertotableview;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 
@@ -31,9 +35,7 @@ public class FeatureWithFileBrowserToTableView extends Application {
     ObservableList<FillTable> l;
     Button addToTable = new Button("Add file to table");
     Button delFromTable = new Button("Delete row from table");
-    int click = 0;
-    ArrayList<ObservableList<FillTable>> arr = new ArrayList<ObservableList<FillTable>>();
-    FillTable array = new FillTable();
+    Button open = new Button("Open ...");
     
     @Override
     public void start(Stage primaryStage) {
@@ -61,7 +63,8 @@ public class FeatureWithFileBrowserToTableView extends Application {
         VBox box = new VBox();
         addToTable.setAlignment(Pos.CENTER);
         delFromTable.setAlignment(Pos.CENTER);
-        box.getChildren().addAll(addToTable, delFromTable);
+        open.setAlignment(Pos.CENTER);
+        box.getChildren().addAll(addToTable, delFromTable, open);
         
         root.setCenter(box);
         
@@ -69,61 +72,30 @@ public class FeatureWithFileBrowserToTableView extends Application {
         addToTable.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                    //OK: System.out.println("get() is = " + browser.getListFile());
-                    //String file_name = browser.getFileName();
-                    //System.out.println("getFileName() : " + browser.getFileName());
-                    //System.out.println("getFilePath() : " + browser.getFilePath());
-                    /*
-                    click += event.getClickCount();
-                    System.out.println(click);
-                    
-                    FillTable a = new FillTable(browser.getFileName(), browser.getFilePath());
-                    ObservableList<FillTable> l = FXCollections.observableArrayList(a);
-                    table.setItems(l);
-                    */
-                
-                    //ObservableList<FillTable> l = FXCollections.observableArrayList(
-                    //new FillTable(browser.getFileName(), browser.getFilePath()));
-                    //if (event.isPrimaryButtonDown()) {
-                        /*
-                        //!!!
-                        table.setItems(FXCollections.observableArrayList(
-                            new FillTable(browser.getFileName(), browser.getFilePath()
-                            )));
-                        */
-                        
-                        table.getItems().add(new FillTable(browser.getFileName(),
-                                browser.getFilePath()));
-                        
-                        /*
-                        arr.add(FXCollections.observableArrayList(
-                            new FillTable(browser.getFileName(), 
-                                    browser.getFilePath()))); 
-                                    
-                        for (ObservableList<FillTable> iter: arr) {
-                            
-                            table.setItems(iter);
-                        }
-                        */
-                      /*  
-                    if (event.isPrimaryButtonDown()) {
-                        System.out.println("Click!");
-                        arr.add(FXCollections.observableArrayList(
-                            new FillTable(browser.getFileName(), 
-                                    browser.getFilePath()))); 
-                        for (ObservableList<FillTable> iter: arr) {
-                            System.out.println(iter);
-                            table.setItems(iter);
-                    }   
-                    }
-                    //}
-                    
-                    System.out.println("Size of array is " + arr.size());
-                    */
-                    
+                table.getItems().add(new FillTable(browser.getFileName(),
+                        browser.getFilePath()));
             }
         });
         
+        open.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setInitialDirectory(new File("/home/"));
+                FileChooser.ExtensionFilter filterOne = 
+                    new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+                FileChooser.ExtensionFilter filterTwo = 
+                    new FileChooser.ExtensionFilter("All files", "*.");
+                fileChooser.getExtensionFilters().addAll(filterOne, filterTwo);
+                
+                List<File> files = fileChooser.showOpenMultipleDialog(primaryStage);
+                try {
+                    addRows(table, files);
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(FeatureWithFileBrowserToTableView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
+            }
+        });
         
         
         delFromTable.setOnAction(event -> deleteRow());
@@ -148,5 +120,14 @@ public class FeatureWithFileBrowserToTableView extends Application {
         }
     }  
     
-    
+    private void addRows(TableView table, List<File> files) throws IOException {
+        if (files == null || files.isEmpty()) {
+            System.out.println("Error: no files");
+            return;
+        }
+        for (File file: files) {
+            Path filePAth = file.toPath();
+            table.getItems().add(new FillTable(file.getName(), file.getPath()));
+        }
+    }
 }

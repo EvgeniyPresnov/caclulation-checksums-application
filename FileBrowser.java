@@ -92,9 +92,7 @@ public class FileBrowser {
                         MultipleSelectionModel<TreeItem<File>> selection =
                                 treeView.getSelectionModel();
                         selection.setSelectionMode(SelectionMode.MULTIPLE);
-                        
-                        //setMyFile(childFile);
-                        
+
                         treeView.setOnMousePressed(new EventHandler<MouseEvent>() {                           
                             @Override
                             public void handle(MouseEvent event) {
