@@ -2,6 +2,7 @@
 package featurewithfilebrowsertotableview;
 
 import java.io.File;
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -23,10 +25,15 @@ import javafx.stage.Stage;
 
 public class FeatureWithFileBrowserToTableView extends Application {
     
-    TableView<FillTable> table = new TableView<FillTable>();
-    //ObservableList<FillTable> l;
+    TableView table = new TableView();
+    
+    
+    ObservableList<FillTable> l;
     Button addToTable = new Button("Add file to table");
     Button delFromTable = new Button("Delete row from table");
+    int click = 0;
+    ArrayList<ObservableList<FillTable>> arr = new ArrayList<ObservableList<FillTable>>();
+    FillTable array = new FillTable();
     
     @Override
     public void start(Stage primaryStage) {
@@ -57,26 +64,69 @@ public class FeatureWithFileBrowserToTableView extends Application {
         box.getChildren().addAll(addToTable, delFromTable);
         
         root.setCenter(box);
-        //int click = 0;
+        
         
         addToTable.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                     //OK: System.out.println("get() is = " + browser.getListFile());
                     //String file_name = browser.getFileName();
-                    //System.out.println("getFileName() : " + file_name);
+                    //System.out.println("getFileName() : " + browser.getFileName());
                     //System.out.println("getFilePath() : " + browser.getFilePath());
+                    /*
+                    click += event.getClickCount();
+                    System.out.println(click);
                     
-                   
-                    
-                FillTable a = new FillTable(browser.getFileName(), browser.getFilePath());
-                ObservableList<FillTable> l = FXCollections.observableArrayList(a);
+                    FillTable a = new FillTable(browser.getFileName(), browser.getFilePath());
+                    ObservableList<FillTable> l = FXCollections.observableArrayList(a);
+                    table.setItems(l);
+                    */
                 
-                table.setItems(l);
+                    //ObservableList<FillTable> l = FXCollections.observableArrayList(
+                    //new FillTable(browser.getFileName(), browser.getFilePath()));
+                    //if (event.isPrimaryButtonDown()) {
+                        /*
+                        //!!!
+                        table.setItems(FXCollections.observableArrayList(
+                            new FillTable(browser.getFileName(), browser.getFilePath()
+                            )));
+                        */
+                        
+                        table.getItems().add(new FillTable(browser.getFileName(),
+                                browser.getFilePath()));
+                        
+                        /*
+                        arr.add(FXCollections.observableArrayList(
+                            new FillTable(browser.getFileName(), 
+                                    browser.getFilePath()))); 
+                                    
+                        for (ObservableList<FillTable> iter: arr) {
+                            
+                            table.setItems(iter);
+                        }
+                        */
+                      /*  
+                    if (event.isPrimaryButtonDown()) {
+                        System.out.println("Click!");
+                        arr.add(FXCollections.observableArrayList(
+                            new FillTable(browser.getFileName(), 
+                                    browser.getFilePath()))); 
+                        for (ObservableList<FillTable> iter: arr) {
+                            System.out.println(iter);
+                            table.setItems(iter);
+                    }   
+                    }
+                    //}
+                    
+                    System.out.println("Size of array is " + arr.size());
+                    */
                     
             }
         });
         
+        
+        
+        delFromTable.setOnAction(event -> deleteRow());
         
         table.getColumns().addAll(nameColumn, pathColumn);
         root.setLeft(tree);
@@ -91,7 +141,12 @@ public class FeatureWithFileBrowserToTableView extends Application {
         launch(args);
     }
     
-    //private ObservableList<FillTable> getList() {}
-        
+    private void deleteRow() {
+        int selectedRow = table.getSelectionModel().getSelectedIndex();
+        if (selectedRow >= 0) {
+            table.getItems().remove(selectedRow);
+        }
+    }  
+    
     
 }
