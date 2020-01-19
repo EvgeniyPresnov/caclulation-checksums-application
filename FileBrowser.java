@@ -31,7 +31,9 @@ public class FileBrowser {
     
     private TreeView treeView;
     private String selectedFile = "";
-    private ObservableList<FillTable> list;
+    //private ObservableList<FillTable> list;
+    private String fileName, filePath;
+    
     /*
     private int w, h;
     
@@ -50,8 +52,9 @@ public class FileBrowser {
         return new TreeView<File>(root);
     }
     
-    private TreeItem<File> createNode(File f) {
-    return new TreeItem<File>(f) {
+    private TreeItem<File> createNode(File f) { 
+        return new TreeItem<File>(f) {
+        
         private boolean isLeaf;
         private boolean isFirstTimeChildren = true;
         private boolean isFirstTimeLeaf = true;
@@ -89,18 +92,24 @@ public class FileBrowser {
                         MultipleSelectionModel<TreeItem<File>> selection =
                                 treeView.getSelectionModel();
                         selection.setSelectionMode(SelectionMode.MULTIPLE);
-
+                        
+                        //setMyFile(childFile);
+                        
                         treeView.setOnMousePressed(new EventHandler<MouseEvent>() {                           
                             @Override
                             public void handle(MouseEvent event) {
                                 
-                                String tmp = "";
+                                String name = ""; String path = "";
                                 for (TreeItem<File> item: selection.getSelectedItems()) {
-                                    tmp += item.getValue().getName() + "\n";
-                                    setListFile(tmp);
+                                    //tmp += item.getValue().getName() + "\n";
+                                    //setListFile(tmp);
                                     
-                                    
+                                    setFileName(/*tmp += */ name += item.getValue().getName() + "\n");
+                                    setFilePath(/*tmp += */ path += item.getValue().getPath() + "\n");
+                                    //getTableList(childFile);
                                 }
+                               
+                                
                             }
                         });
                     }
@@ -117,7 +126,7 @@ public class FileBrowser {
         treeView.setPrefSize(400, 500);
         return treeView;
     }
-    
+    /*
     public String getListFile() {
         return selectedFile;
     }
@@ -126,6 +135,34 @@ public class FileBrowser {
         this.selectedFile = file;
         //System.out.println("set() is " + this.selectedFile);
     }
+    */
+    /*
+    public void setTableList(File file) {
+        //System.out.println("setTableList() name: " + file.getName().toString());
+        //System.out.println("setTableList() path: " + file.getPath().toString());
+        FillTable a = new FillTable(file.getName().toString(), 
+                file.getPath().toString());
+        System.out.println("My class is " + a.getName());
+        ObservableList<FillTable> list = FXCollections.observableArrayList(a);
+      // System.out.println("list.size() " + list.size());
+        
+    }
+    */
     
-   
+    public String getFileName() {
+        return fileName;
+    }
+    
+    public void setFileName(String file) {
+        fileName = file;
+    }
+    
+    public String getFilePath() {
+        return filePath;
+    }
+    
+    public void setFilePath(String path) {
+        filePath = path;
+    }
+    
 }
