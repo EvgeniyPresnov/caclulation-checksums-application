@@ -10,6 +10,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 
 import javafx.collections.FXCollections;
@@ -31,22 +38,8 @@ public class FileBrowser {
     
     private TreeView treeView;
     private String selectedFile = "";
-    //private ObservableList<FillTable> list;
-    private String fileName, filePath;
-    
-    /*
-    private int w, h;
-    
-    public FileBrowser() {
-        treeView.setPrefSize(300, 400);
-    }
-    
-    public FileBrowser(int width, int heigth) {
-        w = width; h = heigth;
-        treeView = null;
-        treeView.setPrefSize(w, h);
-    }
-    */
+    private String fileName, filePath, controlSum;
+        
     private TreeView buildFileSystemBrowser() {
         TreeItem<File> root = createNode(new File("//"));
         return new TreeView<File>(root);
@@ -92,22 +85,17 @@ public class FileBrowser {
                         MultipleSelectionModel<TreeItem<File>> selection =
                                 treeView.getSelectionModel();
                         selection.setSelectionMode(SelectionMode.MULTIPLE);
-
+                        
                         treeView.setOnMousePressed(new EventHandler<MouseEvent>() {                           
                             @Override
                             public void handle(MouseEvent event) {
                                 
-                                String name = ""; String path = "";
+                                String name = ""; String path = ""; String sum = "";
                                 for (TreeItem<File> item: selection.getSelectedItems()) {
-                                    //tmp += item.getValue().getName() + "\n";
-                                    //setListFile(tmp);
-                                    
-                                    setFileName(/*tmp += */ name += item.getValue().getName() + "\n");
-                                    setFilePath(/*tmp += */ path += item.getValue().getPath() + "\n");
-                                    //getTableList(childFile);
+                                    setFileName(name += item.getValue().getName() + "\n");
+                                    setFilePath(path += item.getValue().getPath() + "\n");
+                                    setFileFromBrowser(sum += item.getValue().getAbsolutePath());
                                 }
-                               
-                                
                             }
                         });
                     }
@@ -124,28 +112,6 @@ public class FileBrowser {
         treeView.setPrefSize(400, 500);
         return treeView;
     }
-    /*
-    public String getListFile() {
-        return selectedFile;
-    }
-   
-    public void setListFile(String file) {
-        this.selectedFile = file;
-        //System.out.println("set() is " + this.selectedFile);
-    }
-    */
-    /*
-    public void setTableList(File file) {
-        //System.out.println("setTableList() name: " + file.getName().toString());
-        //System.out.println("setTableList() path: " + file.getPath().toString());
-        FillTable a = new FillTable(file.getName().toString(), 
-                file.getPath().toString());
-        System.out.println("My class is " + a.getName());
-        ObservableList<FillTable> list = FXCollections.observableArrayList(a);
-      // System.out.println("list.size() " + list.size());
-        
-    }
-    */
     
     public String getFileName() {
         return fileName;
@@ -158,9 +124,17 @@ public class FileBrowser {
     public String getFilePath() {
         return filePath;
     }
+
+    public void setFilePath(String file) {
+        filePath = file;
+    }
     
-    public void setFilePath(String path) {
-        filePath = path;
+    public String getFileFromBrowser() {
+        return controlSum;
+    }
+    
+    public void setFileFromBrowser(String file) {
+        controlSum = file;
     }
     
 }
