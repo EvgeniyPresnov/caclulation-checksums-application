@@ -58,11 +58,12 @@ public class ClassButtons {
                 List<File>files = fileChooser.showOpenMultipleDialog(null);
                 
                 try {
+                    
                     table.addRowsToTable(table.getInstance(), files, sum);
                 } 
                 catch (IOException ex) {
-                    System.out.println("log: Error in " + ClassButtons.class.getName() + " in function openFileSystem()");
-                    Logger.getLogger(ClassButtons.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
+                    Logger.getLogger(ClassButtons.class.getName()).log(Level.SEVERE, "Cannot to invoke into initial directory", ex);
                 }
             }     
         });
@@ -88,17 +89,13 @@ public class ClassButtons {
             @Override
             public void handle(ActionEvent event) {
                 
-                System.out.println("Click!");
                 try {
                     table.getInstance().getItems().add(new FillTable(tree.getFileName(),
                         sum.chooseAlgorithm(tree.getFileName(), tree.getFileFromBrowser())));
                 } catch (IOException ex) {
-                    System.out.println("Error in " + ClassButtons.class.getName() + " : in function addFileFromTreeToTable");
-                    Logger.getLogger(ClassButtons.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                
-                
+                    ex.printStackTrace();
+                    Logger.getLogger(ClassButtons.class.getName()).log(Level.SEVERE, "You have to choose one of the methods of checking sum", ex);
+                }   
             }
         });
     }
@@ -127,9 +124,10 @@ public class ClassButtons {
             public void changed(ObservableValue<? extends Toggle> ov,  Toggle old_toggle, Toggle new_toggle) {
                 if (group.getSelectedToggle() != null) {
                     RadioButton chooseCheckSumAlgorithm = (RadioButton) group.getSelectedToggle();
-                    System.out.println("Click! RadioButton!");
-                    System.out.println("Name RadioButton is " + chooseCheckSumAlgorithm.getText());
                     sum.setAlgorithm(chooseCheckSumAlgorithm.getText());
+                }
+                else {
+                    Logger.getLogger(ClassButtons.class.getName()).log(Level.INFO, "No choose the method of checking sum");
                 }
             }
         

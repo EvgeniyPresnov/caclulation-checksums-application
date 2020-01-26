@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package guifixone;
 
 import java.io.IOException;
@@ -18,7 +14,6 @@ public class GuiFixOne extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         
-        //StackPane root = new StackPane();
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 600, 400);
         

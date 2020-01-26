@@ -14,7 +14,7 @@ import javafx.scene.input.MouseEvent;
 
 public class TreeViewWidget {
     private TreeView treeView = new TreeView();
-    private String selectedFile, fileName, filePath, controlSum;
+    private String  fileName, filePath, controlSum;
 
     public TreeView getInstance() {
         return treeView;
@@ -79,7 +79,7 @@ public class TreeViewWidget {
                             @Override
                             public void handle(MouseEvent event) {
                                 
-                                String name = ""; String path = ""; String sum = "";
+                                String name = "", path = "", sum = "";
                                 for (TreeItem<File> item: selection.getSelectedItems()) {
                                     setFileName(name += item.getValue().getName() + "\n");
                                     setFilePath(path += item.getValue().getPath() + "\n");

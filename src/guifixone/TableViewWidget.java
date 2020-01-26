@@ -4,6 +4,8 @@ package guifixone;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableColumn;
@@ -45,18 +47,19 @@ public class TableViewWidget {
     }
 
      public void addRowsToTable(TableView table, List<File> files, ControlSum sum) throws IOException {
-        if (files == null || files.isEmpty()) {
-            System.out.println("Error: no files to add file.getName()"
-                    + " and file.getPath() to table");
-            return;
+        try {
+            if (files == null || files.isEmpty()) {
+                return;
+            }
+            for (File file: files) {
+                table.getItems().add(new FillTable(file.getName(),
+                        sum.chooseAlgorithm(file.getName(), file.getPath()))); 
+            }
         }
-        for (File file: files) {
-            table.getItems().add(new FillTable(file.getName(),
-                    sum.chooseAlgorithm(file.getName(), file.getPath()))); 
+        catch (IOException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(ClassButtons.class.getName()).log(Level.SEVERE, 
+                "Cannot add the file to table because it is empty", ex);
         }
     }
-     
-    
-    
-
 }
