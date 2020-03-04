@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.cniiag.evgeniypresnov.gui;
+package ru.cniiag.app.gui.model;
 
 /**
  * This class defines the data model. Based on this class, we will generate 
@@ -11,20 +11,20 @@ package ru.cniiag.evgeniypresnov.gui;
  * 
  * @author Evgeniy Presnov
  */
-public class Data {
+public class DataModel {
     /**The initialization a name of the file.*/
     private String fileName = "";
-
-     /**The initialization a checking sum of file.*/
+    
+    /**The initialization a checking sum of file.*/
     private String checkSum = "";
     
-    /**
+     /**
      * The initialization the object.
      * 
      * @param fileName
      * @param checkSum
      */
-    public Data (String fileName, String checkSum) {
+    public DataModel (String fileName, String checkSum) {
         this.fileName = fileName;
         this.checkSum = checkSum;
     }
@@ -38,31 +38,30 @@ public class Data {
         fileName = name;
     }
     
-    /**
+     /**
      * Set a value of checking sum.
      *
      * @param sum 
      */
-    public void setCheckSum(String sum) {
+    public void setCheckSum (String sum) {
         checkSum = sum;
     }
     
     /**
      * Returns the name of file.
      * 
-     * @return
+     * @return fileName
      */
     public String getName () {
         return fileName;
-    }
+    } 
     
-    /**
+     /**
      * Returns the checking sum of file.
      * 
-     * @return 
+     * @return checkSum
      */
-    public String getCheckSum () {   
+    public String getCheckSum () {
         return checkSum;
     }
 }
-
