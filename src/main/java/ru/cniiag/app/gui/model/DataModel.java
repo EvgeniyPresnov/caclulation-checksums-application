@@ -6,23 +6,28 @@
 package ru.cniiag.app.gui.model;
 
 /**
- * This class defines the data model. Based on this class, we will generate 
+ * This class defines the data model.Based on this class, we will generate 
  * data for filling in the table.
  * 
  * @author Evgeniy Presnov
  */
-public class DataModel {
-    /**The initialization a name of the file.*/
+public final class DataModel {
+    /**
+     *Storing the file name.
+     */
     private String fileName = "";
     
-    /**The initialization a checking sum of file.*/
+    /**
+     * Storing the checking sum.
+     */
     private String checkSum = "";
     
-     /**
-     * The initialization the object.
+    /**
+     * The constructor accepts the parameters for initializing 
+     * fields of this class.
      * 
      * @param fileName
-     * @param checkSum
+     * @param checkSum 
      */
     public DataModel (String fileName, String checkSum) {
         this.fileName = fileName;
@@ -30,7 +35,7 @@ public class DataModel {
     }
     
     /**
-     * Set a value of the name.
+     * Set the name for the file.
      * 
      * @param name 
      */
@@ -38,9 +43,9 @@ public class DataModel {
         fileName = name;
     }
     
-     /**
-     * Set a value of checking sum.
-     *
+    /**
+     * Set the checking sum for the file.
+     * 
      * @param sum 
      */
     public void setCheckSum (String sum) {
@@ -48,20 +53,20 @@ public class DataModel {
     }
     
     /**
-     * Returns the name of file.
+     * Return the name of file.
      * 
-     * @return fileName
+     * @return 
      */
     public String getName () {
         return fileName;
-    } 
+    }
     
-     /**
-     * Returns the checking sum of file.
+    /**
+     * Return the checking sum of file.
      * 
-     * @return checkSum
+     * @return 
      */
-    public String getCheckSum () {
+    public String getCheckSum () {   
         return checkSum;
     }
 }

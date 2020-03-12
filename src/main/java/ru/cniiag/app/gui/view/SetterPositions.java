@@ -5,188 +5,265 @@
  */
 package ru.cniiag.app.gui.view;
 
-import javafx.scene.layout.AnchorPane;
-
 /**
-  * This class defines the distance from the main application window 
-  * to each widget located in this window.
-  * 
-  * @author Evgeniy Presnov
-  * 
-  */
-public class SetterPositions {
-    // The creation a layout.
-    private static final AnchorPane anchorPane = new AnchorPane ();
-    
-     // The initialization the sizes for window of application.
-    private final int sizeWidth = 1000;
-    private final int sizeHeight = 600;
-    
+ * This class defines the distance from the application of window
+ * to each widget located in this window.
+ * 
+ * @author Evgeniy Presnov
+ */
+public final class SetterPositions {
     /**
-     * The declaration the fields of this class.
+     * Set the size for the main application.
      */
-    private final double distanceFromTopForOpenInitButton;
-    private final double distanceFromRightForOpenInitButton;
-    
-    private final double distanceFromRightForLabelOpenButton;
-    private final double distanceFromTopForLabelOpenButton;
-    
-    private final int distanceFromLeftForRadioButtons;
-    private final int distanceFromTopForRadioButtons;
-        
-    private final double distanceFromLeftForLabelRadioButtons;
-    private final double distanceFromTopForLabelRadioButtons;
-    
-    private final double distanceFromRightForTable;
-    private final double distanceFromBottomForTable;
-    private final double distanceFromTopForTable;
-    
+    private final int APP_SIZE_WIDTH = 1000;
+    private final int APP_SIZE_HEIGHT = 600;
+
     /**
-    * The constructor initializes the values for fields this class.
-    * 
-    */
-    public SetterPositions () {
-        distanceFromTopForOpenInitButton = 10.0;
-        distanceFromRightForOpenInitButton = 10.0;
-                
-        distanceFromRightForLabelOpenButton = 210.0;
-        distanceFromTopForLabelOpenButton = 16.0;
-        
-        distanceFromLeftForRadioButtons = 270;
-        distanceFromTopForRadioButtons = 200;
-    
-        
-        distanceFromLeftForLabelRadioButtons = 270;
-        distanceFromTopForLabelRadioButtons = 160;
-    
-        distanceFromRightForTable = 10.0;
-        distanceFromBottomForTable = 30.0;
-        distanceFromTopForTable = 45.0;
-    }
-    
-    /**
-     * Returns an instance of AnchorPane class.
-     * 
-     * @return anchorPane
+     * Set the distance for the button that provides access to 
+     * the file system. 
      */
-    public AnchorPane getInstance () {
-        return anchorPane;
-    }
+    private final double DISTANCE_FROM_TOP_FOR_OPEN_INIT_BUTTON = 10.0;
+    private final double DISTANCE_FROM_RIGHT_FOR_OPEN_INIT_BUTTON = 10.0;
     
-    /***
-     * Returns a value of width for application.
+    /**
+     * Set the distance for label of button that provides an access to the file
+     * system.
+     */
+    private final double DISTANCE_FROM_RIGHT_FOR_LABEL_OPEN_INIT_BUTTON = 210.0;
+    private final double DISTANCE_FROM_TOP_FOR_LABEL_OPEN_INIT_BUTTON = 16.0;
+    
+    /**
+     * Set the distance for the button that calculates the checking sum 
+     * of file.
+     */
+    private final double DISTANCE_FROM_LEFT_FOR_CALCULATE_BUTTON = 270.0;
+    private final double DISTANCE_FROM_TOP_FOR_CALCULATE_BUTTON = 45.0;
+    
+    /**
+     * Set the distance for the radio buttons that provides a choice
+     * of algorithm for calculating the checksum.
+     */
+    private final double DISTANCE_FROM_LEFT_FOR_RADIO_BUTTONS = 270.0;
+    private final double DISTANCE_FROM_TOP_FOR_RADIO_BUTTONS = 200.0;
+
+    /**
+     * Set the distance of label for the radio buttons.
+     */
+    private final double DISTANCE_FROM_LEFT_LABEL_RADIO_BUTTONS = 270.0;
+    private final double DISTANCE_FROM_TOP_LABEL_RADIO_BUTTONS = 160.0;
+
+    /**
+     * Set the distance for the table.
+     */
+    private final double DISTANCE_FROM_RIGHT_FOR_TABLE = 10.0;
+    private final double DISTANCE_FROM_BOTTOM_FOR_TABLE = 30.0;
+    private final double DISTANCE_FROM_TOP_FOR_TABLE = 45.0;
+
+    /**
+     * Set the distance for the tree of file system.
+     */
+    private final double DISTANCE_FROM_LEFT_FOR_FILE_SYSTEM = 10.0;
+    private final double DISTANCE_FROM_BOTTOM_FOR_FILE_SYSTEM = 30.0;
+    private final double DISTANCE_FROM_TOP_FOR_FILE_SYSTEM = 45.0;
+    
+    /**
+     * Set the distance of label for the tree of file system.
+     */
+    private final double DISTANCE_FROM_LEFT_FOR_LABEL_FILE_SYSTEM = 10.0;
+    private final double DISTANCE_FROM_TOP_FOR_LABEL_FILE_SYSTEM = 16.0;
+    
+    /**
+     * Return the width of  window.
      * 
-     * @return sizeWidth
+     * @return APP_SIZE_WIDTH
      */
     public int getWidthForApp () {
-        return sizeWidth;
+        return APP_SIZE_WIDTH;
     }
     
-        /**
-     * Returns a value of height for application. 
+    /**
+     * Return the height of window.
      * 
-     * @return sizeHeight
+     * @return APP_SIZE_HEIGHT
      */
     public int getHeightForApp () {
-        return sizeHeight;
-    }
-    
-     /**
-     * Returns a value for table from right size.
-     * 
-     * @return distanceFromRightForTable
-     */
-    public double getRightSizeForTable () {
-        return distanceFromRightForTable;
+        return  APP_SIZE_HEIGHT;
     }
     
     /**
-     * Returns a value for table from bottom size.
+     * Return the distance from the right size of application to the table.
      * 
-     * @return 
+     * @return DISTANCE_FROM_RIGHT_FOR_TABLE
      */
-    public double getBottomSizeForTable () {
-        return distanceFromBottomForTable;
+    public double getRightSizeForTable () { 
+        return DISTANCE_FROM_RIGHT_FOR_TABLE; 
     }
     
     /**
-     * Returns a value for table from top size.
+     * Return the distance from the bottom size of application to the table.
      * 
-     * @return distanceFromTopForTable
+     * @return DISTANCE_FROM_BOTTOM_FOR_TABLE
      */
-    public double getTopSizeForTable () {
-        return distanceFromTopForTable;
-    }
-    
-     /**
-     * Returns a value for 'Open' button from top side.
-     * 
-     * @return distanceFromTopForOpenInitButton
-     */
-    public double getTopSizeForOpenInitButton () {
-        return distanceFromTopForOpenInitButton;
-    }
-    
-     /**
-     * Returns a value for 'Open' button right side.
-     * 
-     * @return distanceFromRightForOpenInitButton
-     */
-    public double getRightSizeForOpenInitButton () {
-        return distanceFromRightForOpenInitButton;
+    public double getBottomSizeForTable () { 
+        return DISTANCE_FROM_BOTTOM_FOR_TABLE;
     }
     
     /**
-     * Returns a value for label of 'Open' button from right side.
+     * Return the distance from the top size of application to the table.
      * 
-     * @return distanceFromRightForLabelOpenButton
+     * @return DISTANCE_FROM_TOP_FOR_TABLE
      */
-    public double getRightSizeForLabelOpenInitButton () {
-        return distanceFromRightForLabelOpenButton;
+    public double getTopSizeForTable () { 
+        return DISTANCE_FROM_TOP_FOR_TABLE; 
     }
     
     /**
-     * Returns a value for label of 'Open' button from top side. 
+     * Return the distance from the top size of application to 
+     * the button that provides an access to the file system.
      * 
-     * @return distanceFromTopForLabelOpenButton
+     * @return DISTANCE_FROM_TOP_FOR_OPEN_INIT_BUTTON
      */
-    public double getTopSizeForLabelOpenInitButton () {
-        return distanceFromTopForLabelOpenButton;
+    public double getTopSizeForOpenInitButton () { 
+        return DISTANCE_FROM_TOP_FOR_OPEN_INIT_BUTTON; 
     }
     
     /**
-     * Returns a value for RadioButtons from left side.
+     * Return the distance from the right size of application to
+     * the button that provides an access to the file system.
      * 
-     * @return distanceFromLeftForRadioButtons
+     * @return DISTANCE_FROM_RIGHT_FOR_OPEN_INIT_BUTTON
      */
-    public double getLeftSizeForRadioButtons () {
-        return distanceFromLeftForRadioButtons;
+    public double getRightSizeForOpenInitButton () { 
+        return DISTANCE_FROM_RIGHT_FOR_OPEN_INIT_BUTTON; 
     }
     
     /**
-     * Returns a value for RadioButtons from top side.
+     * Return the distance from the right size of application to the label 
+     * of the button that provides an access to the file system.
      * 
-     * @return distanceFromTopForRadioButtons
+     * @return DISTANCE_FROM_RIGHT_FOR_LABEL_OPEN_INIT_BUTTON
      */
-    public double getTopSizeForRadioButtons () {
-        return distanceFromTopForRadioButtons;
+    public double getRightSizeForLabelOpenInitButton () { 
+        return DISTANCE_FROM_RIGHT_FOR_LABEL_OPEN_INIT_BUTTON; 
     }
     
     /**
-     * Returns a value for label of RadioButtons from left side. 
+     * Return the distance from the top size of application to the label 
+     * of the button that provides an access to the file system.
      * 
-     * @return distanceFromLeftForLabelRadioButtons
+     * @return DISTANCE_FROM_TOP_FOR_LABEL_OPEN_INIT_BUTTON
      */
-    public double getLeftSizeForLabelRadioButtons () {
-        return distanceFromLeftForLabelRadioButtons;
+    public double getTopSizeForLabelOpenInitButton () { 
+        return DISTANCE_FROM_TOP_FOR_LABEL_OPEN_INIT_BUTTON; 
     }
     
-     /**
-     * Returns a value for label of RadioButtons from top side.
+    /**
+     * Return the distance from left size of application to the
+     * radio buttons 
      * 
-     * @return distanceFromTopForLabelRadioButtons
+     * @return DISTANCE_FROM_LEFT_FOR_RADIO_BUTTONS
      */
-    public double getTopSizeForLabelRadioButtons () {
-        return distanceFromTopForLabelRadioButtons;
-    }    
+    public double getLeftSizeForRadioButtons () { 
+        return DISTANCE_FROM_LEFT_FOR_RADIO_BUTTONS;
+    }
+    
+    /**
+     * Return the distance from top size of application to the
+     * radio buttons 
+     * 
+     * @return DISTANCE_FROM_TOP_FOR_RADIO_BUTTONS
+     */
+    public double getTopSizeForRadioButtons () { 
+        return DISTANCE_FROM_TOP_FOR_RADIO_BUTTONS;
+    }
+    
+    /**
+     * Return the distance from the left size of application to the label 
+     * of the radio buttons.
+     * 
+     * @return DISTANCE_FROM_LEFT_LABEL_RADIO_BUTTONS
+     */
+    public double getLeftSizeForLabelRadioButtons () { 
+        return DISTANCE_FROM_LEFT_LABEL_RADIO_BUTTONS;
+    }
+    
+    /**
+     * Return the distance from the top size of application to the label 
+     * of the radio buttons.
+     * 
+     * @return DISTANCE_FROM_TOP_LABEL_RADIO_BUTTONS
+     */
+    public double getTopSizeForLabelRadioButtons () { 
+        return DISTANCE_FROM_TOP_LABEL_RADIO_BUTTONS;
+    }
+    
+    /**
+     * Return the distance from the left size of application to the
+     * file system.
+     * 
+     * @return DISTANCE_FROM_LEFT_FOR_FILE_SYSTEM
+     */
+    public double getLeftSizeForFileSystem () { 
+        return DISTANCE_FROM_LEFT_FOR_FILE_SYSTEM; 
+    }
+
+    /**
+     * Return the distance from the bottom size of application to the
+     * file system.
+     * 
+     * @return DISTANCE_FROM_BOTTOM_FOR_FILE_SYSTEM
+     */
+    public double getBottomSizeForFileSystem () { 
+        return DISTANCE_FROM_BOTTOM_FOR_FILE_SYSTEM; 
+    }
+    
+    /**
+     * Return the distance from the top size of application to the
+     * file system.
+     * 
+     * @return DISTANCE_FROM_TOP_FOR_FILE_SYSTEM
+     */
+    public double getTopSizeFileSystem () { 
+        return DISTANCE_FROM_TOP_FOR_FILE_SYSTEM;
+    }
+    
+    /**
+     * Return the distance from the left size of application to the label 
+     * of the file system.
+     * 
+     * @return DISTANCE_FROM_LEFT_FOR_LABEL_FILE_SYSTEM
+     */
+    public double getLeftSizeForLabelFileSystem () { 
+        return DISTANCE_FROM_LEFT_FOR_LABEL_FILE_SYSTEM;
+    }
+    
+    /**
+     * Return the distance from the top size of application to the label 
+     * of the file system.
+     * 
+     * @return DISTANCE_FROM_TOP_FOR_LABEL_FILE_SYSTEM
+     */
+    public double getTopSizeForLabelFileSystem () { 
+        return DISTANCE_FROM_TOP_FOR_LABEL_FILE_SYSTEM;
+    }
+    
+    /**
+     * Return the distance from the left size of application to 
+     * the button that that calculates the checking sum of file.
+     * 
+     * @return DISTANCE_FROM_LEFT_FOR_CALCULATE_BUTTON
+     */
+    public double getLeftSizeForCalculateButton () { 
+        return DISTANCE_FROM_LEFT_FOR_CALCULATE_BUTTON; 
+    }
+    
+    /**
+     * Return the distance from the top size of application to 
+     * the button that that calculates the checking sum of file.
+     * 
+     * @return DISTANCE_FROM_TOP_FOR_CALCULATE_BUTTON
+     */
+    public double getTotSizeForCalculateButton () { 
+        return DISTANCE_FROM_TOP_FOR_CALCULATE_BUTTON;
+    }
 }

@@ -8,20 +8,38 @@ package ru.cniiag.app.gui.view;
 import javafx.scene.control.Label;
 
 /**
- * This class represents the labels for every widget.
+ * This class represents the labels for every widget on the window of
+ * application.
  * 
  * @author Evgeniy Presnov
  */
-public class SetterLabels {
-    // The initialization of label for 'Open' button.
-    private final Label labelForOpenInitButton = new Label ("Open the "
-        + "directory /home/user_name/");
-    // The initialization of label for RadioButton class.
-    private final Label labelForRadioButtons = new Label ("The choice of "
-        + "calculation of checking sum");
+public final class SetterLabels {
+    /**
+     * The initialization the label for button that provides an access to 
+     * the file system.
+     */
+    private final Label labelForOpenInitButton = new Label (
+        "Open the directory /home/user_name/"
+    );
     
     /**
-     * Returns the label for 'Open' button.
+     * The initialization the label for the radio buttons that provides a choice
+     * of algorithm for calculating the checksum.
+     */
+    private final Label labelForRadioButtons = new Label (
+        "The choice of algorithm of calculation  " + "\n" + " of checking sum"
+    );
+    
+    /**
+     * The initialization the label for tree of file system.
+     */
+    private final Label labelForFileSystem = new Label (
+        "Representation of file system"
+    );
+    
+    /**
+     * Return the label for button that provides an access to 
+     * the file system.
      * 
      * @return labelForOpenInitButton
      */
@@ -30,11 +48,20 @@ public class SetterLabels {
     }
     
     /**
-     * Returns the label for RadioButton class.
+     * Return the label for the radio buttons.
      * 
      * @return labelForRadioButtons
      */
     public Label getLabelForRadioButtons () {
         return labelForRadioButtons;
+    }
+    
+    /**
+     * Return the label for tree of file system.
+     * 
+     * @return labelForFileSystem
+     */
+    public Label getLabelForFileSystem () {
+        return labelForFileSystem;
     }
 }

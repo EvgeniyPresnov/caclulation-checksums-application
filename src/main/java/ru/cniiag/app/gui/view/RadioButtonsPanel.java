@@ -10,20 +10,31 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 
 /**
- * This class implementations the actions, when user clicks on radio buttons.
- *
+ * This class allows the user to select the algorithm calculation of checking 
+ * sum where each radio button corresponds to a specific algorithm of
+ * calculation checking sum.
+ * 
  * @author Evgeniy Presnov
  */
-public class RadioButtonsPanel {
-    /**The field creates and initializes a layout, where all buttons 
-    * will be placed.
-    */
+public final class RadioButtonsPanel {
+    /**
+     * Creating the vertical box.
+     */
     private final VBox boxRadioButton = new VBox ();
     
-    // This field create a group, where all RadioButtons will be placed. 
+    /**
+     * Creating the toggle group where all RadioButtons will be placed. 
+     */
     private final ToggleGroup group = new ToggleGroup ();
     
-    //These fields create and initialize class RadioButton.
+    /**
+     * Storing the algorithm of calculation checking sum.
+     */
+    private String algorithm = "";
+    
+    /**
+     * Creating the radio buttons.
+     */
     private final RadioButton btnMD5 = new RadioButton ("MD5");
     private final RadioButton btnSHA1 = new RadioButton ("SHA-1");
     private final RadioButton btnSHA224 = new RadioButton ("SHA-224");
@@ -31,8 +42,9 @@ public class RadioButtonsPanel {
     private final RadioButton btnSHA384 = new RadioButton ("SHA-384");
     private final RadioButton btnSHA512 = new RadioButton ("SHA-512");
     
-    /***
-     * The placement of the buttons on the group.
+    /**
+     * The constructor sets up the radio buttons on the toggle group
+     * where they can be selected.
      */
     public RadioButtonsPanel () {
         btnMD5.setToggleGroup (group);
@@ -41,52 +53,50 @@ public class RadioButtonsPanel {
         btnSHA224.setToggleGroup (group);
         btnSHA256.setToggleGroup (group);
         btnSHA384.setToggleGroup (group);
-        btnSHA512.setToggleGroup (group);
+        btnSHA512.setToggleGroup (group); 
     }
     
     /**
-     * Returns the layout, where RadioButtons are placed.
+     * Return the vertical box that holds all the radio buttons.
      * 
      * @return boxRadioButton
      */
     public VBox getLayoutForRadioButtons () {
-        boxRadioButton.getChildren ().addAll (btnMD5, btnSHA1, btnSHA224, 
-            btnSHA256, btnSHA384, btnSHA512);
+        boxRadioButton.getChildren ().addAll (
+            btnMD5
+            , btnSHA1
+            , btnSHA224
+            , btnSHA256
+            , btnSHA384
+            , btnSHA512
+        );
         return boxRadioButton;
     }
     
     /**
-     * This method provides the choice of algorithm of checking sum. User clicks
-     * on the RadioButton and will be invoke appropriate a shell command for 
-     * checking sum.
+     * Return the algorithm of calculation checking sum.
      * 
-     * @return 
+     * @return algorithm
      */
-    public String setAlgorithmCheckSum () {
-        if (group.getSelectedToggle ().equals (btnMD5) || btnMD5.isSelected () )
-        {
-            return "md5sum";
+    public String getAlgorithmCheckSum () {  
+        if (group.getSelectedToggle ().equals (btnMD5) || btnMD5.isSelected ()) {
+            algorithm = "md5sum";
         }
-        else if (group.getSelectedToggle ().equals (btnSHA1) ) {
-            return "sha1sum";
+        else if (group.getSelectedToggle ().equals (btnSHA1)) {
+            algorithm = "sha1sum";
         }
-        else if (group.getSelectedToggle ().equals (btnSHA1) ) {
-            return "sha1sum";
+        else if (group.getSelectedToggle ().equals (btnSHA224)) {
+            algorithm = "sha224sum";
         }
-        else if (group.getSelectedToggle ().equals (btnSHA224) ) {
-            return "sha224sum";
+        else if (group.getSelectedToggle ().equals (btnSHA256)) {
+            algorithm = "sha256sum";
         }
-        else if (group.getSelectedToggle ().equals (btnSHA256) ) {
-            return "sha256sum";
+        else if (group.getSelectedToggle ().equals (btnSHA384)) {
+            algorithm =  "sha384sum";
         }
-        else if (group.getSelectedToggle ().equals (btnSHA384) ) {
-            return "sha384sum";
+        else if (group.getSelectedToggle ().equals (btnSHA512)) {
+            algorithm =  "sha512sum";
         }
-        else if (group.getSelectedToggle ().equals (btnSHA512) ) {
-            return "sha512sum";
-        }
-        System.out.println ("The algorithm for calculation of checking sum + "
-            + "is not choosen");
-        return null;
+        return algorithm;
     }
 }

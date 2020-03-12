@@ -12,116 +12,145 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import ru.cniiag.app.gui.model.DataModel;
 
 /**
- * This class describes the table for filling data about the file after 
- * calculation checking sum.
+ * This class describes the table for filling data.
  * 
  * @author Evgeniy Presnov
  */
-public class DataStore {
-    /** The initialization a table.*/
+public final class DataStore {
+    /**
+     * Creating the table.
+     */
     private final TableView table = new TableView ();
     
-     /**The initialization a size the table.*/
-    private final int sizeWidth = 400;
-    private final int sizeHeight = 400;
-    
-     /**Set the size for every column of the table.*/
-    private final int widthColumnName = 150;
-    private final int widthColumnSum = 300;
-    
-    /*Set the default data for the file.*/
-    private String initDir = "/home/";
-    private String formatFile = "TXT files";
-    private String expansionFile = "*.txt";
+    /**
+     * Set the size for table.
+     */
+    private final int TABLE_SIZE_WIDTH = 400;
+    private final int TABLE_SIZE_HEIGHT = 400;
     
     /**
-     * The construct initializes the columns of table, sets the scroll
-     * and fill table using class Data. 
+     * Set the directory where the user will select a
+     * file from the file system.
+     */
+    private String initDir = "/home/";
+    
+    /**
+     * Set the file format.
+     */
+    private String format = "TXT files";
+    
+    /**
+     * Set the expansion for file.
+     */
+    private String expansion = "*.txt";
+   
+    /**
+     * The constructor initializes the columns of table. 
+     * 
      */
     public DataStore () {
-        table.setPrefSize (sizeWidth, sizeHeight);
-        
-        /*The initialization a scroll and set the set up for this object.*/
+        table.setPrefSize(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT);
+
+        /**
+         * Creating the scroll.
+         */
         ScrollPane scroll = new ScrollPane ();
+        
+        /**
+         * Set up the scroll. 
+         */
         scroll.setVbarPolicy (ScrollPane.ScrollBarPolicy.ALWAYS);
         scroll.setHbarPolicy (ScrollPane.ScrollBarPolicy.ALWAYS);
         
-        /**Initialize the columns of table.*/
-        TableColumn <DataModel, String> nameColumn = 
-            new TableColumn<> ("File name");
+        /**
+         * Set the column for displaying the name.
+         */
+        TableColumn<DataModel, String> nameColumn 
+            = new TableColumn<> ("File name");
         
-        TableColumn <DataModel, String> sumColumn = 
-            new TableColumn<> ("Checking sum");
+        /**
+         * Set the column for displaying the checking sum.
+         */
+        TableColumn<DataModel, String> sumColumn 
+            = new TableColumn<> ("Checking sum");
         
-         /**Fill the table of data from ClassFillTable.*/
-        nameColumn.setCellValueFactory (new PropertyValueFactory <DataModel, 
-            String> ("Name") );
-        sumColumn.setCellValueFactory (new PropertyValueFactory <DataModel, 
-            String> ("CheckSum") );
+        /**
+         * Set the size for two columns.
+         */
+        final int NAME_COLUMN_WIDTH = 150;
+        final int SUM_COLUMN_WIDTH = 300;
         
-        nameColumn.setPrefWidth (widthColumnName);
-        sumColumn.setPrefWidth (widthColumnSum);
+        /**
+         * Define how to fill data for each cell.
+         */
+        nameColumn.setCellValueFactory (new PropertyValueFactory<DataModel, 
+            String> ("Name"));
+        sumColumn.setCellValueFactory (new PropertyValueFactory<DataModel, 
+            String> ("CheckSum"));
+        
+        nameColumn.setPrefWidth (NAME_COLUMN_WIDTH);
+        sumColumn.setPrefWidth (SUM_COLUMN_WIDTH);
         
         table.getColumns ().addAll (nameColumn, sumColumn);
         scroll.setContent (table);
     }
     
-    /** 
-     * Returns an instance of TableView.
+    /**
+     * Return the table.
      * 
-     * @return table
+     * @return table 
      */
-    public TableView getInstance () {
+    public TableView getTableView () {
         return table;
     }
     
     /**
-     * Set the format for the file.
+     * Set the file format.
      * 
      * @param format 
      */
     public void setFormatForFile (String format) {
-        formatFile = format;
+        this.format = format;
     }
     
     /**
-     * Set the expansion for the file.
+     * Set the file expansion.
      * 
      * @param expansion 
      */
     public void setExpansionForFile (String expansion) {
-        expansionFile = expansion;
+        this.expansion = expansion;
     }
     
     /**
-     * Set the directory by default for file.
+     * Set the directory.
      * 
-     * @param dir 
+     * @param initDir 
      */
-    public void setInitDir (String dir) {
-        initDir = dir;
+    public void setInitDir (String initDir) {
+        this.initDir = initDir;
     }
     
     /**
-     * Returns the format of file.
+     * Return the file format.
      * 
-     * @return formatFile
+     * @return 
      */
     public String getFormatForFile () {
-        return formatFile;
+        return format;
     }
     
     /**
-     * Returns the expansion of file.
+     * Return the file expansion.
      * 
-     * @return expansionFile 
+     * @return expansion
      */
     public String getExpansionForFile () {
-        return expansionFile;
+        return expansion;
     }
     
     /**
-     * Returns the directory.
+     * Return the directory.
      * 
      * @return initDir
      */

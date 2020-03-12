@@ -12,105 +12,170 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import ru.cniiag.app.gui.model.DataModel;
+import ru.cniiag.app.gui.utility.CalculatorCheckSum;
+import ru.cniiag.app.gui.view.FileSystem;
 
 /**
- * This class implementations the actions, when user clicks on buttons.
- *
+ * This class describes the actions when the certain button is clicked.
+ * 
  * @author Evgeniy Presnov
  */
-public class ButtonsPanel {
-    /**These fields create and initialize class Button .*/
-    private Button toCalculate = new Button ("Calculate the file");
-    private Button toOpenInitDir = new Button ("Open the initial directory");
-
+public final class ButtonsPanel {
     /**
-     * This method implements an another way to navigate in file system.
+     * The creation of button that provides an access to 
+     * the file system.
+     */
+    private Button btnOpenInitDir = new Button ("Open the initial directory");
+    
+    /**
+     * The creation of button that calculates the checking sum.
+     */
+    private Button btnCalculateFile = new Button ("Calculate the file");
+    
+    /**
+     * This method allows to write the selected file from the file system to
+     * the table.
      * 
      * @param table
      * @param files
-     * @param checkSum
      * @param radioButtons
-     * @throws IOException
-     * @throws Exception 
+     * @throws IOException 
      */
-    private void addRowsToTable (TableView table, List<File> files,
-        CalculatorCheckSum checkSum, RadioButtonsPanel radioButtons) 
-        throws IOException, Exception {
+    private void addRowsToTable (
+        TableView table
+        , List<File> files
+        , RadioButtonsPanel radioButtons) throws IOException {
         
-        try {
-            if (files == null || files.isEmpty () ) {
-                System.out.println ("This file is empty");
-                return; 
-            }
-            for (File file: files) {
-                table.getItems ().add (new DataModel (file.getName (), 
-                checkSum.calculateFile(file.getName (), file.getPath (), 
-                radioButtons.setAlgorithmCheckSum () )));
-            }
+        if (files == null || files.isEmpty ()) {
+            /**
+             * The creation of the message box for displaying the warnings.
+             */
+            Alert alert = new Alert (AlertType.WARNING);
+            alert.setTitle ("Warninig message box");
+            alert.setHeaderText ("This file can not be open");
+            return; // invalid data.
         }
-        catch (IOException ex) {
-            Logger.getLogger (ButtonsPanel.class.getName()). log(Level.SEVERE, 
-                "Exception: ", ex);
+        
+        for (File file: files) {
+            try {
+                table.getItems ()
+                .add (new DataModel ( 
+                    file.getName (),
+                    CalculatorCheckSum.calculateFile (
+                        file.getName ()
+                        , file.getPath ()
+                        , radioButtons.getAlgorithmCheckSum ())));
+            } catch (IOException ex) {
+                Logger.getLogger (ButtonsPanel.class.getName ())
+                .log (Level.SEVERE, null, ex);
+            }
         }
     }
     
     /**
-     * This method allows navigating in file system, when user clicks 
-     * on "Open" button. In the set up the /home directory initializes by
-     * default.
+     * This method allows navigating in file system, when the user clicks 
+     * on "Open the initial directory" button.After the user selects a file
+     * the checking sum will be written to the table.
      * 
      * @param table
-     * @param checkSum
+     * @param initDir
+     * @param format
+     * @param expansion
      * @param radioButtons
      * @throws IOException 
      */
-    public void openInitDir (final DataStore table, final CalculatorCheckSum checkSum, 
-        final RadioButtonsPanel radioButtons) throws IOException {
+    public void openInitDir (
+        final TableView table
+        , final String initDir
+        , final String format
+        , final String expansion
+        , final RadioButtonsPanel radioButtons) throws IOException {
         
-        toOpenInitDir.setOnAction (new EventHandler<ActionEvent> () {
+        btnOpenInitDir.setOnAction (new EventHandler<ActionEvent> () {
             @Override
             public void handle (ActionEvent event) {
                 FileChooser fileChooser = new FileChooser ();
-                fileChooser.setInitialDirectory (new File (table.getInitDir()));
+                fileChooser.setInitialDirectory (new File (initDir));
                 FileChooser.ExtensionFilter filter = 
-                    new FileChooser.ExtensionFilter(table.getFormatForFile(), 
-                        table.getExpansionForFile());
-                fileChooser.getExtensionFilters().addAll(filter);
+                    new FileChooser.ExtensionFilter (format, expansion);
+                fileChooser.getExtensionFilters ().addAll (filter);
                 
-                List<File> files = fileChooser.showOpenMultipleDialog(null);
-                
+                List<File> files = fileChooser.showOpenMultipleDialog (null);
+
                 try {
-                    addRowsToTable (table.getInstance(), files, checkSum, 
-                        radioButtons);
-                }
-                catch (Exception ex) {
-                    Logger.getLogger (ButtonsPanel.class.getName() ).log 
-                        (Level.SEVERE, "Exception: ", ex);
-                }
-            }
+                    addRowsToTable (
+                        table
+                        , files
+                        , radioButtons
+                    );
+                } catch (IOException ex) {
+                    Logger.getLogger (ButtonsPanel.class.getName ())
+                    .log (Level.SEVERE, null, ex);
+                }  
+            }     
         });
     }
     
     /**
-     * Returns the Button that on push
+     * This method allows you to calculate the checking sum of a file when
+     * the user is selecting the file from the tree of file system after 
+     * clicking "Calculate the file" button.The result will be written 
+     * to the table.
      * 
-     * @return toOpenInitDir
+     * @param tree
+     * @param table
+     * @param radioButtons
+     * @throws IOException 
      */
-    public Button getOpenInitDir () {
-        return toOpenInitDir;
+    public void calculateFile (
+        final FileSystem tree
+        , final DataStore table
+        , final RadioButtonsPanel radioButtons) throws IOException {
+        
+        btnCalculateFile.setOnAction (new EventHandler<ActionEvent> () {
+            @Override
+            public void handle (ActionEvent event) {
+                /*
+                try {
+                    table.getTableView ().getItems ()
+                    .add (new DataModel (
+                        tree.getFileName ()
+                        , CalculatorCheckSum.calculateFile (
+                            tree.getFileName ()
+                            , tree.getFilePath ()
+                            , radioButtons.getAlgorithmCheckSum ())));
+                } catch (IOException ex) {
+                    Logger.getLogger (ButtonsPanel.class.getName ())
+                    .log (Level.SEVERE, null, ex);
+                } 
+               */ 
+            }
+                
+        });
     }
     
     /**
-     * Returns the Button thats on pushing calculate checking sum of file.
+     * Return the button for displaying the file system.
      * 
-     * @return toCalculate
+     * @return btnOpenInitDir
      */
-    public Button getCalculateFile () {
-        return toCalculate;
+    public Button getOpenInitDir () {
+        return btnOpenInitDir;
     }
     
+    /**
+     * Return the button for calculation of checking sum.
+     * 
+     * @return btnCalculateFile
+     */
+    public Button getCalculateFile () {
+        return btnCalculateFile;
+    }
+
 }
