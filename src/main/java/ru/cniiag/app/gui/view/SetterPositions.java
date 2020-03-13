@@ -15,62 +15,62 @@ public final class SetterPositions {
     /**
      * Set the size for the main application.
      */
-    private final int APP_SIZE_WIDTH = 1000;
-    private final int APP_SIZE_HEIGHT = 600;
+    private final static int APP_SIZE_WIDTH = 1000;
+    private final static int APP_SIZE_HEIGHT = 600;
 
     /**
      * Set the distance for the button that provides access to 
      * the file system. 
      */
-    private final double DISTANCE_FROM_TOP_FOR_OPEN_INIT_BUTTON = 10.0;
-    private final double DISTANCE_FROM_RIGHT_FOR_OPEN_INIT_BUTTON = 10.0;
+    private final static double DISTANCE_FROM_TOP_FOR_OPEN_INIT_BUTTON = 10.0;
+    private final static double DISTANCE_FROM_RIGHT_FOR_OPEN_INIT_BUTTON = 10.0;
     
     /**
      * Set the distance for label of button that provides an access to the file
      * system.
      */
-    private final double DISTANCE_FROM_RIGHT_FOR_LABEL_OPEN_INIT_BUTTON = 210.0;
-    private final double DISTANCE_FROM_TOP_FOR_LABEL_OPEN_INIT_BUTTON = 16.0;
+    private final static double DISTANCE_FROM_RIGHT_FOR_LABEL_OPEN_INIT_BUTTON = 210.0;
+    private final static double DISTANCE_FROM_TOP_FOR_LABEL_OPEN_INIT_BUTTON = 16.0;
     
     /**
      * Set the distance for the button that calculates the checking sum 
      * of file.
      */
-    private final double DISTANCE_FROM_LEFT_FOR_CALCULATE_BUTTON = 270.0;
-    private final double DISTANCE_FROM_TOP_FOR_CALCULATE_BUTTON = 45.0;
+    private final static double DISTANCE_FROM_LEFT_FOR_CALCULATE_BUTTON = 270.0;
+    private final static double DISTANCE_FROM_TOP_FOR_CALCULATE_BUTTON = 45.0;
     
     /**
      * Set the distance for the radio buttons that provides a choice
      * of algorithm for calculating the checksum.
      */
-    private final double DISTANCE_FROM_LEFT_FOR_RADIO_BUTTONS = 270.0;
-    private final double DISTANCE_FROM_TOP_FOR_RADIO_BUTTONS = 200.0;
+    private final static double DISTANCE_FROM_LEFT_FOR_RADIO_BUTTONS = 270.0;
+    private final static double DISTANCE_FROM_TOP_FOR_RADIO_BUTTONS = 200.0;
 
     /**
      * Set the distance of label for the radio buttons.
      */
-    private final double DISTANCE_FROM_LEFT_LABEL_RADIO_BUTTONS = 270.0;
-    private final double DISTANCE_FROM_TOP_LABEL_RADIO_BUTTONS = 160.0;
+    private final static double DISTANCE_FROM_LEFT_LABEL_RADIO_BUTTONS = 270.0;
+    private final static double DISTANCE_FROM_TOP_LABEL_RADIO_BUTTONS = 160.0;
 
     /**
      * Set the distance for the table.
      */
-    private final double DISTANCE_FROM_RIGHT_FOR_TABLE = 10.0;
-    private final double DISTANCE_FROM_BOTTOM_FOR_TABLE = 30.0;
-    private final double DISTANCE_FROM_TOP_FOR_TABLE = 45.0;
+    private final static double DISTANCE_FROM_RIGHT_FOR_TABLE = 10.0;
+    private final static double DISTANCE_FROM_BOTTOM_FOR_TABLE = 30.0;
+    private final static double DISTANCE_FROM_TOP_FOR_TABLE = 45.0;
 
     /**
      * Set the distance for the tree of file system.
      */
-    private final double DISTANCE_FROM_LEFT_FOR_FILE_SYSTEM = 10.0;
-    private final double DISTANCE_FROM_BOTTOM_FOR_FILE_SYSTEM = 30.0;
-    private final double DISTANCE_FROM_TOP_FOR_FILE_SYSTEM = 45.0;
+    private final static double DISTANCE_FROM_LEFT_FOR_FILE_SYSTEM = 10.0;
+    private final static double DISTANCE_FROM_BOTTOM_FOR_FILE_SYSTEM = 30.0;
+    private final static double DISTANCE_FROM_TOP_FOR_FILE_SYSTEM = 45.0;
     
     /**
      * Set the distance of label for the tree of file system.
      */
-    private final double DISTANCE_FROM_LEFT_FOR_LABEL_FILE_SYSTEM = 10.0;
-    private final double DISTANCE_FROM_TOP_FOR_LABEL_FILE_SYSTEM = 16.0;
+    private final static double DISTANCE_FROM_LEFT_FOR_LABEL_FILE_SYSTEM = 10.0;
+    private final static double DISTANCE_FROM_TOP_FOR_LABEL_FILE_SYSTEM = 16.0;
     
     /**
      * Return the width of  window.

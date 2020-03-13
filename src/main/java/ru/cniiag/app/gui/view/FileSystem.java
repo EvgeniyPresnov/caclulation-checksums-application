@@ -24,10 +24,10 @@ public class FileSystem {
     
     private String fileName = "";
     private String filePath = "";
-    private String initDir = "//";
+    private String initDir = "~";
     
-    private final int sizeWidth = 250;
-    private final int sizeHeight = 400;
+    private final static int sizeWidth = 250;
+    private final static int sizeHeight = 400;
     
     public FileSystem () {
         treeView.setPrefSize (sizeWidth, sizeHeight);

@@ -42,8 +42,9 @@ public final class CalculatorCheckSum {
         
         BufferedReader reader = new BufferedReader (new InputStreamReader 
             (process.getInputStream ()));
+        reader.close();
         
-        String line = "";
+        String line = null;
         /**
          * Read the output from the command.
          */

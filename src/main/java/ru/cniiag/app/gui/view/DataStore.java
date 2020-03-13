@@ -25,8 +25,8 @@ public final class DataStore {
     /**
      * Set the size for table.
      */
-    private final int TABLE_SIZE_WIDTH = 400;
-    private final int TABLE_SIZE_HEIGHT = 400;
+    private final static  int TABLE_SIZE_WIDTH = 400;
+    private final static int TABLE_SIZE_HEIGHT = 400;
     
     /**
      * Set the directory where the user will select a
@@ -77,7 +77,7 @@ public final class DataStore {
         /**
          * Set the size for two columns.
          */
-        final int NAME_COLUMN_WIDTH = 150;
+        final int  NAME_COLUMN_WIDTH = 150;
         final int SUM_COLUMN_WIDTH = 300;
         
         /**

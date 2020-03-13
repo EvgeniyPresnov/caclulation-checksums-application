@@ -137,11 +137,11 @@ public final class ButtonsPanel {
         final FileSystem tree
         , final DataStore table
         , final RadioButtonsPanel radioButtons) throws IOException {
-        
+        /*
         btnCalculateFile.setOnAction (new EventHandler<ActionEvent> () {
             @Override
             public void handle (ActionEvent event) {
-                /*
+                
                 try {
                     table.getTableView ().getItems ()
                     .add (new DataModel (
@@ -154,10 +154,11 @@ public final class ButtonsPanel {
                     Logger.getLogger (ButtonsPanel.class.getName ())
                     .log (Level.SEVERE, null, ex);
                 } 
-               */ 
+               
             }
                 
         });
+        */
     }
     
     /**
