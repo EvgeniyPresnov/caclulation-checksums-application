@@ -20,16 +20,18 @@ import javafx.scene.input.MouseEvent;
  * @author Evgeniy Presnov
  */
 public class FileSystem {
-    private TreeView treeView = buildFileSystemBrowser ();
+    private TreeView<File> treeView;
     
-    private String fileName = "";
-    private String filePath = "";
-    private String initDir = "~";
+    //private String fileName = "";
+    //private String filePath = "";
+    private static String initDir = "~";
     
     private final static int sizeWidth = 250;
     private final static int sizeHeight = 400;
     
     public FileSystem () {
+        TreeItem<File> root = createNode (new File (initDir));
+        treeView = new TreeView<> (root);
         treeView.setPrefSize (sizeWidth, sizeHeight);
     }
     
@@ -40,11 +42,12 @@ public class FileSystem {
     
     // public void getFileBrowser () { treeView = buildFileSystemBrowser (); }
     
+    /*
     private TreeView buildFileSystemBrowser () {
         TreeItem<File> root = createNode (new File (initDir));
-        return new TreeView<File> (root);
+        return 
     }
-    
+    */
     private TreeItem<File> createNode (File file) {
         return new TreeItem<File> (file) {
 
@@ -82,6 +85,7 @@ public class FileSystem {
                             FXCollections.observableArrayList ();
                     for (File childFile : files) {
                         children.add (createNode (childFile)); 
+                        /*
                         final MultipleSelectionModel<TreeItem<File>> selection =
                                 treeView.getSelectionModel ();
                         selection.setSelectionMode (SelectionMode.MULTIPLE);
@@ -99,6 +103,7 @@ public class FileSystem {
                             }
                         });
                     }
+                    */
                 return children;
                 }
             }
@@ -106,7 +111,7 @@ public class FileSystem {
         }
     };
     }
-    
+    /*
     public String getFileName () {
         return fileName;
     }
@@ -122,5 +127,5 @@ public class FileSystem {
     public void setFilePath (String path) {
         filePath = path;
     }
-
+    */
 }
