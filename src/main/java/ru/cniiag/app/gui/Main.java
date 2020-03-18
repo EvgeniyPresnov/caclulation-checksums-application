@@ -15,8 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ru.cniiag.app.gui.view.ButtonsPanel;
+import ru.cniiag.app.gui.view.FileSystemHandler;
 import ru.cniiag.app.gui.view.DataStore;
-import ru.cniiag.app.gui.view.FileSystem;
 import ru.cniiag.app.gui.view.RadioButtonsPanel;
 import ru.cniiag.app.gui.view.SetterLabels;
 import ru.cniiag.app.gui.view.SetterPositions;
@@ -43,13 +43,11 @@ public class Main extends Application {
         ButtonsPanel buttons = new ButtonsPanel ();
         SetterLabels labels = new SetterLabels ();
         RadioButtonsPanel radioButtons = new RadioButtonsPanel ();
-        FileSystem fileSystem = new FileSystem ();
+        FileSystemHandler fileSystem = new FileSystemHandler ();
         DataStore table = new DataStore ();
         
         VBox vBox = new VBox ();
-        
-        //fileSystem.getFileBrowser ();
-        
+
         /**
          * Set the radio buttons on the vertical box.
          */
@@ -88,7 +86,7 @@ public class Main extends Application {
             , vBox
             , fileSystem.getTreeView ()
         );
-       
+     
         /**
          * Creating a Scene by passing the pane object, width and height.
          */
@@ -261,6 +259,7 @@ public class Main extends Application {
          * Set the distance for the file system from the 
          * left size of pane.
          */
+        
         AnchorPane.setLeftAnchor (
             fileSystem
             , pane.getLeftSizeForFileSystem ()
@@ -270,6 +269,7 @@ public class Main extends Application {
          * Set the distance for the file system from the 
          * top size of pane.
          */
+        
         AnchorPane.setTopAnchor (
             fileSystem 
             , pane.getTopSizeFileSystem ()
@@ -279,6 +279,7 @@ public class Main extends Application {
          * Set the distance for the file system from the 
          * bottom size of pane.
          */
+        
         AnchorPane.setBottomAnchor (
             fileSystem
             , pane.getBottomSizeForFileSystem ()
