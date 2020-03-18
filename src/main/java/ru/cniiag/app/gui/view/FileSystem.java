@@ -8,119 +8,93 @@ package ru.cniiag.app.gui.view;
 import java.io.File;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.input.MouseEvent;
 
 /**
- *
+ * This class is an implementation of displaying a
+ * tree of file system
+ * 
  * @author Evgeniy Presnov
  */
-public class FileSystem {
-    private TreeView treeView = buildFileSystemBrowser ();
+public class FileSystem extends TreeItem<File> {
     
-    private String fileName = "";
-    private String filePath = "";
-    private String initDir = "~";
+    private boolean isFirstTimeChildren = true;
+    private boolean isFirstTimeLeaf = true;
+    private boolean isLeaf;
     
-    private final static int sizeWidth = 250;
-    private final static int sizeHeight = 400;
+    /**
+     * Create of the message box for displaying the warnings.
+    */
+    Alert alert = new Alert (Alert.AlertType.WARNING);
     
-    public FileSystem () {
-        treeView.setPrefSize (sizeWidth, sizeHeight);
+    /**
+     * The constructor of super class in order to create
+     * a new TreeItem<File>.
+     * @param file 
+     */
+    public FileSystem (File file) {
+        super (file);
     }
-    
-    public TreeView getTreeView () {
-        return treeView;
-    }
-    
-    
-    // public void getFileBrowser () { treeView = buildFileSystemBrowser (); }
-    
-    private TreeView buildFileSystemBrowser () {
-        TreeItem<File> root = createNode (new File (initDir));
-        return new TreeView<File> (root);
-    }
-    
-    private TreeItem<File> createNode (File file) {
-        return new TreeItem<File> (file) {
 
-        private boolean isLeaf;
-        private boolean isFirstTimeChildren = true;
-        private boolean isFirstTimeLeaf = true;
+    /**
+     * @see javafx.scene.control.TreeItem#isLeaf() 
+     */
+    @Override
+    public ObservableList<TreeItem<File>> getChildren () {
+      if (isFirstTimeChildren) {
+        isFirstTimeChildren = false;
+        super.getChildren ().setAll (buildChildren (this));
+      }
+      return super.getChildren ();
+    }
+    
+    /**
+     * @see javafx.scene.control.TreeItem#getChildren() 
+     */
+    @Override
+    public boolean isLeaf () {
+      if (isFirstTimeLeaf) {
+        /**
+         * First getChildren() call, so we actually go off and determine
+         * the children of the File contained in this TreeItem.
+         */
+        isFirstTimeLeaf = false;
+      }
+      return isLeaf;
+    }
 
-        @Override
-        public ObservableList<TreeItem<File>> getChildren () {
-          if (isFirstTimeChildren) {
-            isFirstTimeChildren = false;
+    /**
+     * Return a collection of type ObservableList containing TreeItem, 
+     * which represents all children available in handed TreeItem.
+     * 
+     * @param TreeItem the root node from which children a collection of
+     * TreeItem should be created.
+     * @return an ObservableList<TreeItem<File>> containing TreeItems,
+     * which represents all children available in handed TreeItem. If 
+     * the handed TreeItem is a leaf, an empty list is returned.
+     */
+    private ObservableList<TreeItem<File>> buildChildren (
+        TreeItem<File> TreeItem) {
             
-            super.getChildren ().setAll (buildChildren (this));
-          }
-          return super.getChildren();
-        }
-
-        @Override
-        public boolean isLeaf() {
-          if (isFirstTimeLeaf) {
-            isFirstTimeLeaf = false;
-            File file = (File) getValue ();
-            isLeaf = file.isFile ();
-          }
-          return isLeaf;
-        }
-
-        private ObservableList<TreeItem<File>> buildChildren(
-            TreeItem<File> TreeItem) {
-            File f = TreeItem.getValue ();
-            if (f != null && f.isDirectory ()) {
-                File[] files = f.listFiles ();
-                if (files != null) {
-                    ObservableList<TreeItem<File>> children =
-                            FXCollections.observableArrayList ();
-                    for (File childFile : files) {
-                        children.add (createNode (childFile)); 
-                        final MultipleSelectionModel<TreeItem<File>> selection =
-                                treeView.getSelectionModel ();
-                        selection.setSelectionMode (SelectionMode.MULTIPLE);
-                        
-                        treeView.setOnMousePressed (new EventHandler<MouseEvent> () {                           
-                            @Override
-                            public void handle(MouseEvent event) {
-                                String name = "";
-                                String path = "";
-                                
-                                for (TreeItem<File> item: selection.getSelectedItems ()) {
-                                    setFileName (name += item.getValue ().getName () + "\n");
-                                    setFilePath (path += item.getValue().getPath () + "\n");
-                                }
-                            }
-                        });
-                    }
-                return children;
+        File f = TreeItem.getValue();
+        if (f != null && f.isDirectory()) {
+            File[] files = f.listFiles();
+            if (files != null) {
+                ObservableList<TreeItem<File>> children = 
+                FXCollections.observableArrayList();
+                
+                for (File childFile : files) {
+                    children.add (new FileSystem (childFile));
                 }
+                return children;
             }
-            return FXCollections.emptyObservableList ();
+            else {
+                alert.setTitle ("Warning message box");
+                alert.setHeaderText ("The file is empty");
+                alert.showAndWait ();
+            }
         }
-    };
+        return FXCollections.emptyObservableList();
     }
-    
-    public String getFileName () {
-        return fileName;
-    }
- 
-    public void setFileName (String name) {
-        fileName = name;
-    }
-
-    public String getFilePath () {
-        return filePath;
-    }
-
-    public void setFilePath (String path) {
-        filePath = path;
-    }
-
 }
