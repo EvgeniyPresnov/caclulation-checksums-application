@@ -38,7 +38,7 @@ public final class FileSystemHandler {
     /**
      * Set the root directory.
      */
-    private final static String ROOT_DIR = "~";
+    private final static String ROOT_DIR = "//";
     
     public FileSystemHandler () {
         treeView = new TreeView<> (new FileSystem (new File (ROOT_DIR)));
