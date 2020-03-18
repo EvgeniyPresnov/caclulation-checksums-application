@@ -52,8 +52,8 @@ public final class FileSystemHandler {
          * to its checksum.
          */
         treeView.setOnMousePressed ( (MouseEvent event) -> {
-            String name = null;
-            String path = null;
+            String name = "";
+            String path = "";
             
             for (TreeItem<File> item: selection.getSelectedItems ()) {
                 setFileName (name += item.getValue ().getName () + "\n");
