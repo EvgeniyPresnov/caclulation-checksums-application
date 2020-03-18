@@ -13,23 +13,21 @@ import javafx.scene.control.TreeItem;
 
 /**
  * This class is an implementation of displaying a
- * tree of file system.
+ * tree of file system
  * 
  * @author Evgeniy Presnov
  */
-<<<<<<< HEAD
 public class FileSystem extends TreeItem<File> {
     
     private boolean isFirstTimeChildren = true;
     private boolean isFirstTimeLeaf = true;
     private boolean isLeaf;
-
+    
     /**
      * Create of the message box for displaying the warnings.
     */
     Alert alert = new Alert (Alert.AlertType.WARNING);
     
-<<<<<<< HEAD
     /**
      * The constructor of super class in order to create
      * a new TreeItem<File>.
@@ -51,7 +49,6 @@ public class FileSystem extends TreeItem<File> {
       return super.getChildren ();
     }
     
-<<<<<<< HEAD
     /**
      * @see javafx.scene.control.TreeItem#getChildren() 
      */
@@ -80,7 +77,6 @@ public class FileSystem extends TreeItem<File> {
     private ObservableList<TreeItem<File>> buildChildren (
         TreeItem<File> TreeItem) {
             
-<<<<<<< HEAD
         File f = TreeItem.getValue();
         if (f != null && f.isDirectory()) {
             File[] files = f.listFiles();
@@ -90,10 +86,15 @@ public class FileSystem extends TreeItem<File> {
                 
                 for (File childFile : files) {
                     children.add (new FileSystem (childFile));
-=======
-            super.getChildren ().setAll (buildChildren (this));
-          }
-          return super.getChildren();
+                }
+                return children;
+            }
+            else {
+                alert.setTitle ("Warning message box");
+                alert.setHeaderText ("The file is empty");
+                alert.showAndWait ();
+            }
         }
-
+        return FXCollections.emptyObservableList();
+    }
 }
