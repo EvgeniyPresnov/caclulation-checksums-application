@@ -38,7 +38,7 @@ public class FileSystem extends TreeItem<File> {
     }
 
     /**
-     * @see javafx.scene.control.TreeItem#isLeaf() 
+     * @see javafx.scene.control.TreeItem#getChildren() 
      */
     @Override
     public ObservableList<TreeItem<File>> getChildren () {
@@ -50,7 +50,7 @@ public class FileSystem extends TreeItem<File> {
     }
     
     /**
-     * @see javafx.scene.control.TreeItem#getChildren() 
+     * @see javafx.scene.control.TreeItem#isLeaf() 
      */
     @Override
     public boolean isLeaf () {
@@ -77,9 +77,9 @@ public class FileSystem extends TreeItem<File> {
     private ObservableList<TreeItem<File>> buildChildren (
         TreeItem<File> TreeItem) {
             
-        File f = TreeItem.getValue();
-        if (f != null && f.isDirectory()) {
-            File[] files = f.listFiles();
+        File f = TreeItem.getValue ();
+        if (f != null && f.isDirectory ()) {
+            File[] files = f.listFiles ();
             if (files != null) {
                 ObservableList<TreeItem<File>> children = 
                 FXCollections.observableArrayList();
