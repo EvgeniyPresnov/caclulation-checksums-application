@@ -19,7 +19,6 @@ import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import ru.cniiag.app.gui.model.DataModel;
 import ru.cniiag.app.gui.utility.CalculatorCheckSum;
-import ru.cniiag.app.gui.view.FileSystem;
 
 /**
  * This class describes the actions when the certain button is clicked.
@@ -28,15 +27,20 @@ import ru.cniiag.app.gui.view.FileSystem;
  */
 public final class ButtonsPanel {
     /**
-     * The creation of button that provides an access to 
+     * Creating the button that provides an access to 
      * the file system.
      */
-    private Button btnOpenInitDir = new Button ("Open the initial directory");
+    private final Button btnOpenInitDir = new Button ("Open the initial directory");
     
     /**
-     * The creation of button that calculates the checking sum.
+     * Creating the of button that calculates the checking sum.
      */
-    private Button btnCalculateFile = new Button ("Calculate the file");
+    private final Button btnCalculateFile = new Button ("Calculate the file");
+    
+    /**
+     * Creating the message box for displaying the warnings.
+     */
+    private final Alert alert = new Alert (AlertType.WARNING);
     
     /**
      * This method allows to write the selected file from the file system to
@@ -56,7 +60,6 @@ public final class ButtonsPanel {
             /**
              * The creation of the message box for displaying the warnings.
              */
-            Alert alert = new Alert (AlertType.WARNING);
             alert.setTitle ("Warninig message box");
             alert.setHeaderText ("This file can not be open");
             return; // invalid data.
@@ -77,6 +80,7 @@ public final class ButtonsPanel {
             }
         }
     }
+
     
     /**
      * This method allows navigating in file system, when the user clicks 
@@ -95,25 +99,34 @@ public final class ButtonsPanel {
         , final String initDir
         , final String format
         , final String expansion
-        , final RadioButtonsPanel radioButtons) throws IOException {
+        , final RadioButtonsPanel radioButtons
+    ) throws IOException {
         
         btnOpenInitDir.setOnAction (new EventHandler<ActionEvent> () {
             @Override
             public void handle (ActionEvent event) {
                 FileChooser fileChooser = new FileChooser ();
+                /**
+                 * Set initial directory.
+                 */
                 fileChooser.setInitialDirectory (new File (initDir));
+                /**
+                 * Add extension filters.
+                 */
                 FileChooser.ExtensionFilter filter = 
                     new FileChooser.ExtensionFilter (format, expansion);
                 fileChooser.getExtensionFilters ().addAll (filter);
                 
                 List<File> files = fileChooser.showOpenMultipleDialog (null);
-
+                
+                if (files == null || files.isEmpty ()) {
+                    alert.setTitle ("Warninig message box");
+                    alert.setHeaderText ("This file is empty");
+                    alert.showAndWait();
+                    return; // invalid data.
+                }
                 try {
-                    addRowsToTable (
-                        table
-                        , files
-                        , radioButtons
-                    );
+                    addRowsToTable (table, files, radioButtons);
                 } catch (IOException ex) {
                     Logger.getLogger (ButtonsPanel.class.getName ())
                     .log (Level.SEVERE, null, ex);
@@ -134,10 +147,11 @@ public final class ButtonsPanel {
      * @throws IOException 
      */
     public void calculateFile (
-        final FileSystem tree
+        final FileSystemHandler tree
         , final DataStore table
-        , final RadioButtonsPanel radioButtons) throws IOException {
-        /*
+        , final RadioButtonsPanel radioButtons
+    ) throws IOException {
+        
         btnCalculateFile.setOnAction (new EventHandler<ActionEvent> () {
             @Override
             public void handle (ActionEvent event) {
@@ -158,7 +172,6 @@ public final class ButtonsPanel {
             }
                 
         });
-        */
     }
     
     /**
@@ -178,5 +191,4 @@ public final class ButtonsPanel {
     public Button getCalculateFile () {
         return btnCalculateFile;
     }
-
 }
