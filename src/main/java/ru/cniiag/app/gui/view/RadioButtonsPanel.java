@@ -1,11 +1,28 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
+
 package ru.cniiag.app.gui.view;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 
@@ -16,7 +33,7 @@ import javafx.scene.layout.VBox;
  * 
  * @author Evgeniy Presnov
  */
-public final class RadioButtonsPanel {
+public final class RadioButtonsPanel extends ToggleButton {
     /**
      * Creating the vertical box.
      */
@@ -42,6 +59,8 @@ public final class RadioButtonsPanel {
     private final RadioButton btnSHA384 = new RadioButton ("SHA-384");
     private final RadioButton btnSHA512 = new RadioButton ("SHA-512");
     
+    Map<String, String> map;
+    
     /**
      * The constructor sets up the radio buttons on the toggle group
      * where they can be selected.
@@ -53,7 +72,16 @@ public final class RadioButtonsPanel {
         btnSHA224.setToggleGroup (group);
         btnSHA256.setToggleGroup (group);
         btnSHA384.setToggleGroup (group);
-        btnSHA512.setToggleGroup (group); 
+        btnSHA512.setToggleGroup (group);
+        
+        map = new HashMap<String, String> () { {
+            put (btnMD5.getText (), "md5sum");
+            put (btnSHA1.getText (), "sha1sum");
+            put (btnSHA224.getText (), "sha224sum");
+            put (btnSHA256.getText (), "sha256sum");
+            put (btnSHA384.getText (), "sha384sum");
+            put (btnSHA512.getText (), "sha512sum");
+        } };
     }
     
     /**
@@ -78,25 +106,10 @@ public final class RadioButtonsPanel {
      * 
      * @return algorithm
      */
-    public String getAlgorithmCheckSum () {  
-        if (group.getSelectedToggle ().equals (btnMD5) || btnMD5.isSelected ()) {
-            algorithm = "md5sum";
-        }
-        else if (group.getSelectedToggle ().equals (btnSHA1)) {
-            algorithm = "sha1sum";
-        }
-        else if (group.getSelectedToggle ().equals (btnSHA224)) {
-            algorithm = "sha224sum";
-        }
-        else if (group.getSelectedToggle ().equals (btnSHA256)) {
-            algorithm = "sha256sum";
-        }
-        else if (group.getSelectedToggle ().equals (btnSHA384)) {
-            algorithm =  "sha384sum";
-        }
-        else if (group.getSelectedToggle ().equals (btnSHA512)) {
-            algorithm =  "sha512sum";
-        }
+    public String getAlgorithmCheckSum () { 
+        RadioButton btn = (RadioButton) group.getSelectedToggle ();
+        algorithm = map.get(btn.getText ());
         return algorithm;
     }
+    
 }

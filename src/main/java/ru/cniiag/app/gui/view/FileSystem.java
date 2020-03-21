@@ -1,8 +1,22 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
+
 package ru.cniiag.app.gui.view;
 
 import java.io.File;
@@ -17,53 +31,53 @@ import javafx.scene.control.TreeItem;
  * 
  * @author Evgeniy Presnov
  */
-public class FileSystem extends TreeItem<File> {
+public final class FileSystem extends TreeItem<File> {
     
     private boolean isFirstTimeChildren = true;
     private boolean isFirstTimeLeaf = true;
     private boolean isLeaf;
-    
-    /**
-     * Create of the message box for displaying the warnings.
-    */
-    Alert alert = new Alert (Alert.AlertType.WARNING);
-    
+
     /**
      * The constructor of super class in order to create
      * a new TreeItem<File>.
      * @param file 
      */
+    
     public FileSystem (File file) {
         super (file);
     }
-
+    
     /**
+     * 
+     * @see javafx.scene.control.TreeItem#isLeaf()
+     */
+    @Override
+    public boolean isLeaf () {
+        if (isFirstTimeLeaf) {
+            isFirstTimeLeaf = false;
+            /**
+             * First getChildren() call, so we actually go off and determine
+             * the children of the File contained in this TreeItem.
+             */
+            File file = (File) getValue ();
+            isLeaf = file.isFile ();
+        }
+        return isLeaf;
+    }
+    
+    /**
+     * 
      * @see javafx.scene.control.TreeItem#getChildren() 
      */
     @Override
     public ObservableList<TreeItem<File>> getChildren () {
-      if (isFirstTimeChildren) {
-        isFirstTimeChildren = false;
-        super.getChildren ().setAll (buildChildren (this));
-      }
-      return super.getChildren ();
+        if (isFirstTimeChildren) {
+            isFirstTimeChildren = false;
+            super.getChildren ().setAll (buildChildren (this));
+        }
+        return super.getChildren ();
     }
     
-    /**
-     * @see javafx.scene.control.TreeItem#isLeaf() 
-     */
-    @Override
-    public boolean isLeaf () {
-      if (isFirstTimeLeaf) {
-        /**
-         * First getChildren() call, so we actually go off and determine
-         * the children of the File contained in this TreeItem.
-         */
-        isFirstTimeLeaf = false;
-      }
-      return isLeaf;
-    }
-
     /**
      * Return a collection of type ObservableList containing TreeItem, 
      * which represents all children available in handed TreeItem.
@@ -90,8 +104,9 @@ public class FileSystem extends TreeItem<File> {
                 return children;
             }
             else {
+                Alert alert = new Alert (Alert.AlertType.WARNING);
                 alert.setTitle ("Warning message box");
-                alert.setHeaderText ("The file is empty");
+                alert.setHeaderText ("The invalid data");
                 alert.showAndWait ();
             }
         }

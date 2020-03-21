@@ -1,8 +1,22 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
+
 package ru.cniiag.app.gui.view;
 
 import java.io.File;
@@ -11,6 +25,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
+import javax.swing.filechooser.FileSystemView;
 
 /**
  * This class allows to select a file from the file system
@@ -21,8 +36,8 @@ import javafx.scene.input.MouseEvent;
 public final class FileSystemHandler {
     private final TreeView<File> treeView;
     
-    private String fileName = null;
-    private String filePath = null;
+    private String fileName = "";
+    private String filePath = "";
     
     /**
      * Set the size for TreeView object.
@@ -38,10 +53,11 @@ public final class FileSystemHandler {
     /**
      * Set the root directory.
      */
-    private final static String ROOT_DIR = "//";
+    private final File ROOT_DIR = 
+        FileSystemView.getFileSystemView ().getRoots () [0];
     
     public FileSystemHandler () {
-        treeView = new TreeView<> (new FileSystem (new File (ROOT_DIR)));
+        treeView = new TreeView<> (new FileSystem (ROOT_DIR));
         treeView.setPrefSize (TREE_SIZE_WIDTH, TREE_SIZE_HEIGTH);
         
         selection = treeView.getSelectionModel ();
@@ -52,13 +68,12 @@ public final class FileSystemHandler {
          * to its checksum.
          */
         treeView.setOnMousePressed ( (MouseEvent event) -> {
-            String name = "";
-            String path = "";
-            
-            for (TreeItem<File> item: selection.getSelectedItems ()) {
-                setFileName (name += item.getValue ().getName () + "\n");
-                setFilePath (path += item.getValue().getPath () + "\n");
-            }
+            selection.getSelectedItems ().stream ().map( (item) ->{
+                setFileName (item.getValue ().getName () );
+                return item; 
+            }).forEachOrdered((item) -> {
+                setFilePath (item.getValue ().getPath () );
+            });
         });
     }
 
