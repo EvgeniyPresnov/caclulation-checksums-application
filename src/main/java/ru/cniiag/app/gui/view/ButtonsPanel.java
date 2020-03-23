@@ -65,25 +65,18 @@ public final class ButtonsPanel {
         TableView table
         , List<File> files
         , RadioButtonsPanel radioButtons
-    ) throws IllegalArgumentException, IOException {
+    ) throws IOException, IllegalArgumentException {
         
-        try {
-            for (File file: files) {
-                table.getItems ().add (new DataModel (
+        if (files == null || files.isEmpty ()) {
+            throw new IllegalArgumentException ("The invalid data");
+        }
+        for (File file: files) {
+            table.getItems ().add (new DataModel (
+                file.getName ()
+                , CalculatorCheckSum.calculateFile (
                     file.getName ()
-                    , CalculatorCheckSum.calculateFile (
-                        file.getName ()
-                        , file.getPath ()
-                        , radioButtons.getAlgorithmCheckSum ())));
-            }
-        } catch (IllegalArgumentException ex) {
-            Alert alert = new Alert (Alert.AlertType.WARNING);
-            alert.setTitle ("Warning message box");
-            alert.setHeaderText ("The invalid data");
-            alert.showAndWait ();
-
-            Logger.getLogger (ButtonsPanel.class.getName ())
-            .log (Level.SEVERE, null, ex.getMessage ());
+                    , file.getPath ()
+                    , radioButtons.getAlgorithmCheckSum ())));
         }
     }
         
@@ -99,15 +92,13 @@ public final class ButtonsPanel {
      * @param format
      * @param expansion
      * @param radioButtons
-     * @throws IOException 
      */
     public void openInitDir (
         final TableView table
         , final String initDir
         , final String format
         , final String expansion
-        , final RadioButtonsPanel radioButtons
-    ) throws IOException, IllegalArgumentException {
+        , final RadioButtonsPanel radioButtons) {
         
         btnOpenInitDir.setOnAction ( (ActionEvent event) -> {
             FileChooser fileChooser = new FileChooser ();
@@ -146,14 +137,12 @@ public final class ButtonsPanel {
      * 
      * @param tree
      * @param table
-     * @param radioButtons
-     * @throws IOException 
+     * @param radioButtons 
      */
     public void calculateFile (
         final FileSystemHandler tree
         , final DataStore table
-        , final RadioButtonsPanel radioButtons
-    ) throws IOException, IllegalArgumentException {
+        , final RadioButtonsPanel radioButtons) {
         
         btnCalculateFile.setOnAction ( (ActionEvent event) -> {
             try {
