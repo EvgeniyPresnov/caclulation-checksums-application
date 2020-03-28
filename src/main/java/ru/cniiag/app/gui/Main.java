@@ -57,7 +57,7 @@ public class Main extends Application {
         SetterLabels labels = new SetterLabels ();
         RadioButtonsPanel radioButtons = new RadioButtonsPanel ();
         FileSystemHandler fileSystem = new FileSystemHandler ();
-        DataStore table = new DataStore ();
+        DataStore table = new DataStore (); 
         
         VBox vBox = new VBox ();
 
@@ -88,7 +88,6 @@ public class Main extends Application {
             , radioButtons
         );
         
-
         setPositions (root
             , pane
             , table.getTableView ()
@@ -97,15 +96,28 @@ public class Main extends Application {
             , vBox
             , fileSystem.getTreeView ()
         );
-     
+    
+        /**
+         * Set the minimum size for window of the main application.
+         */
+        primaryStage.setMinWidth (pane.getMinAppSizeWidth ());
+        primaryStage.setMinHeight (pane.getMinAppSizeHeigth ());
+        
+        /**
+         * Set the maximum size for window of the main application.
+         */
+        primaryStage.setMaxWidth (pane.getSizeWidthForApp ());
+        primaryStage.setMaxHeight (pane.getSizeHeigthForApp ());
+        
         /**
          * Creating a Scene by passing the pane object, width and height.
          */
         Scene scene = new Scene (
             root
-            , pane.getWidthForApp ()
-            , pane.getHeightForApp ()
+            , pane.getSizeWidthForApp ()
+            , pane.getSizeHeigthForApp ()
         );
+        
         /**
          * Setting the title to Stage.
          */
@@ -115,7 +127,7 @@ public class Main extends Application {
          * Adding the scene to Stage.
          */
         primaryStage.setScene (scene);
-        
+
         /**
          * Displaying the contents of the stage.
          */
@@ -181,7 +193,7 @@ public class Main extends Application {
          * the file system from the right size of pane. 
          */
         AnchorPane.setRightAnchor (
-            buttons.getOpenInitDir ()
+            buttons.getOpenInitDirBtn ()
             , pane.getRightSizeForOpenInitButton ()
         );
         
@@ -190,7 +202,7 @@ public class Main extends Application {
          * the file system from the top size of pane. 
          */
         AnchorPane.setTopAnchor (
-            buttons.getOpenInitDir ()
+            buttons.getOpenInitDirBtn ()
             , pane.getTopSizeForOpenInitButton ()
         );
         
@@ -301,7 +313,7 @@ public class Main extends Application {
          * bottom size of pane.
          */
         AnchorPane.setLeftAnchor (
-            buttons.getCalculateFile()
+            ButtonsPanel.getCalculateFileBtn()
             , pane.getLeftSizeForCalculateButton ()
         );
         
@@ -310,7 +322,7 @@ public class Main extends Application {
          * from top size of pane.
          */
         AnchorPane.setTopAnchor (
-            buttons.getCalculateFile()
+            ButtonsPanel.getCalculateFileBtn()
             , pane.getTotSizeForCalculateButton ()
         );
         
@@ -319,8 +331,8 @@ public class Main extends Application {
          */
         root.getChildren ().addAll (
             table
-            , buttons.getOpenInitDir ()
-            , buttons.getCalculateFile ()
+            , buttons.getOpenInitDirBtn ()
+            , ButtonsPanel.getCalculateFileBtn ()
             , labels.getLabelForOpenInitButton ()
             , vBox, fileSystem
             , labels.getLabelForRadioButtons ()
