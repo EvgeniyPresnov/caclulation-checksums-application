@@ -40,7 +40,7 @@ public final class DataStore {
      * Set the size for table.
      */
     private final static  int TABLE_SIZE_WIDTH = 400;
-    private final static int TABLE_SIZE_HEIGHT = 400;
+    private final static int TABLE_SIZE_HEIGTH = 400;
     
     /**
      * Set the directory where the user will select a
@@ -51,19 +51,19 @@ public final class DataStore {
     /**
      * Set the file format.
      */
-    private String format = "TXT files";
+    private String format = "All files";
     
     /**
      * Set the expansion for file.
      */
-    private String expansion = "*.txt";
+    private String expansion = "*.*";
    
     /**
      * The constructor initializes the columns of table. 
      * 
      */
     public DataStore () {
-        table.setPrefSize(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGHT);
+        table.setPrefSize(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGTH);
 
         /**
          * Creating the scroll.
@@ -102,6 +102,9 @@ public final class DataStore {
         
         nameColumn.setPrefWidth (NAME_COLUMN_WIDTH);
         sumColumn.setPrefWidth (SUM_COLUMN_WIDTH);
+        
+        table.setMinHeight(TABLE_SIZE_HEIGTH);
+        table.setMinWidth(TABLE_SIZE_WIDTH);
         
         table.getColumns ().addAll (nameColumn, sumColumn);
         scroll.setContent (table);
