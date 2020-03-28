@@ -1,5 +1,5 @@
 # Project Title 
-The application for calculating the checking sum of text files.
+The application for calculating the checking sum of files.
 
 # Prerequisites
 * java 8
