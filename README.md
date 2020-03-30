@@ -4,7 +4,6 @@ The application for calculating the checking sum of files.
 # Prerequisites
 * java 8
 * jdk 8
-* NetBeans IDE (ver. 8.2)
 
 # Installing
 ```
