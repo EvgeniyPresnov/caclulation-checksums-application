@@ -36,6 +36,7 @@ import javax.swing.filechooser.FileSystemView;
 public final class FileSystemHandler {
     private final TreeView<File> treeView;
     
+    
     private String fileName = "";
     private String filePath = "";
     
@@ -67,12 +68,15 @@ public final class FileSystemHandler {
          * This method allows to select an element from the file system
          * to its checksum.
          */
-        treeView.setOnMousePressed ( (MouseEvent event) -> {
-            selection.getSelectedItems ().stream ().map( (item) ->{
-                setFileName (item.getValue ().getName () );
-                return item; 
-            }).forEachOrdered((item) -> {
-                setFilePath (item.getValue ().getPath () );
+         treeView.setOnMousePressed ( (MouseEvent event) -> {
+            selection.getSelectedItems ().stream ().map ( (item) -> {
+                ButtonsPanel.getCalculateFileBtn ().setDisable (false);
+                return item;
+            }).map ( (item) -> {
+                setFileName (item.getValue ().getName ());
+                return item;
+            }).forEachOrdered ( (item) -> {
+                setFilePath (item.getValue ().getPath ());
             });
         });
     }

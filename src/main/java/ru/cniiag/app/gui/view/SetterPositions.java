@@ -30,7 +30,13 @@ public final class SetterPositions {
      * Set the size for the main application.
      */
     private final static int APP_SIZE_WIDTH = 1000;
-    private final static int APP_SIZE_HEIGHT = 600;
+    private final static int APP_SIZE_HEIGTH = 600;
+    
+    /**
+     * Set the minimum size for the main application
+     */
+    private final static int MIN_APP_SIZE_WIDTH = 930;
+    private final static int MIN_APP_SIZE_HEIGTH = 500;
 
     /**
      * Set the distance for the button that provides access to 
@@ -91,18 +97,37 @@ public final class SetterPositions {
      * 
      * @return APP_SIZE_WIDTH
      */
-    public int getWidthForApp () {
+    public int getSizeWidthForApp () {
         return APP_SIZE_WIDTH;
     }
     
     /**
-     * Return the height of window.
+     * Return the heigth of window.
      * 
-     * @return APP_SIZE_HEIGHT
+     * @return APP_SIZE_HEIGTH
      */
-    public int getHeightForApp () {
-        return  APP_SIZE_HEIGHT;
+    public int getSizeHeigthForApp () {
+        return  APP_SIZE_HEIGTH;
     }
+    
+    /**
+     * Return the minimum heigth size of window.
+     * 
+     * @return MIN_APP_SIZE_HEIGTH
+     */
+    public int getMinAppSizeHeigth () {
+        return MIN_APP_SIZE_HEIGTH;
+    }
+   
+    /**
+     * Return the minimum width size of window.
+     * 
+     * @return MIN_APP_SIZE_WIDTH
+     */
+    public int getMinAppSizeWidth () {
+        return MIN_APP_SIZE_WIDTH;
+    }
+    
     
     /**
      * Return the distance from the right size of application to the table.

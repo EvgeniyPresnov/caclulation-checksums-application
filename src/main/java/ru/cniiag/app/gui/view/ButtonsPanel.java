@@ -46,12 +46,16 @@ public final class ButtonsPanel {
     private final Button btnOpenInitDir = new Button (
         "Open the initial directory"
     );
-    
+  
     /**
      * Creating the of button that calculates the checking sum.
      */
-    private final Button btnCalculateFile = new Button ("Calculate the file");
+    private final static Button btnCalculateFile = new Button ("Calculate the file");
 
+    public ButtonsPanel () {
+        btnCalculateFile.setDisable(true);
+    }
+    
     /**
      * This method allows to write the selected file from the file system to
      * the table.
@@ -65,29 +69,20 @@ public final class ButtonsPanel {
         TableView table
         , List<File> files
         , RadioButtonsPanel radioButtons
-    ) throws IllegalArgumentException, IOException {
+    ) throws IOException, IllegalArgumentException {
         
-        try {
-            for (File file: files) {
-                table.getItems ().add (new DataModel (
+        if (files == null || files.isEmpty ()) {
+            throw new IllegalArgumentException ("The invalid data");
+        }
+        for (File file: files) {
+            table.getItems ().add (new DataModel (
+                file.getName ()
+                , CalculatorCheckSum.calculateFile (
                     file.getName ()
-                    , CalculatorCheckSum.calculateFile (
-                        file.getName ()
-                        , file.getPath ()
-                        , radioButtons.getAlgorithmCheckSum ())));
-            }
-        } catch (IllegalArgumentException ex) {
-            Alert alert = new Alert (Alert.AlertType.WARNING);
-            alert.setTitle ("Warning message box");
-            alert.setHeaderText ("The invalid data");
-            alert.showAndWait ();
-
-            Logger.getLogger (ButtonsPanel.class.getName ())
-            .log (Level.SEVERE, null, ex.getMessage ());
+                    , file.getPath ()
+                    , radioButtons.getAlgorithmCheckSum ())));
         }
     }
-        
-
     
     /**
      * This method allows navigating in file system, when the user clicks 
@@ -99,15 +94,13 @@ public final class ButtonsPanel {
      * @param format
      * @param expansion
      * @param radioButtons
-     * @throws IOException 
      */
     public void openInitDir (
         final TableView table
         , final String initDir
         , final String format
         , final String expansion
-        , final RadioButtonsPanel radioButtons
-    ) throws IOException, IllegalArgumentException {
+        , final RadioButtonsPanel radioButtons) {
         
         btnOpenInitDir.setOnAction ( (ActionEvent event) -> {
             FileChooser fileChooser = new FileChooser ();
@@ -118,23 +111,22 @@ public final class ButtonsPanel {
             /**
              * Add extension filters.
              */
-            FileChooser.ExtensionFilter filter = 
-                    new FileChooser.ExtensionFilter (format, expansion);
+            FileChooser.ExtensionFilter filter =
+                new FileChooser.ExtensionFilter (format, expansion);
             fileChooser.getExtensionFilters ().addAll (filter);
             
-            List<File> files = fileChooser.showOpenMultipleDialog (null);
-            
+            List<File> files = fileChooser.showOpenMultipleDialog (null);            
             try {
                 addRowsToTable (table, files, radioButtons);
-            } catch (IOException ex) { 
+            } catch (IOException | IllegalArgumentException ex) {
                 Alert alert = new Alert (AlertType.WARNING);
                 alert.setTitle ("Warninig message box");
-                alert.setHeaderText ("This file is empty");
+                alert.setHeaderText ("The file is not seleted.");
                 alert.showAndWait();
                 
                 Logger.getLogger (ButtonsPanel.class.getName ())
                 .log (Level.SEVERE, null, ex.getMessage ());
-            }     
+            }
         });
     }
     
@@ -146,14 +138,12 @@ public final class ButtonsPanel {
      * 
      * @param tree
      * @param table
-     * @param radioButtons
-     * @throws IOException 
+     * @param radioButtons 
      */
     public void calculateFile (
         final FileSystemHandler tree
         , final DataStore table
-        , final RadioButtonsPanel radioButtons
-    ) throws IOException, IllegalArgumentException {
+        , final RadioButtonsPanel radioButtons) {
         
         btnCalculateFile.setOnAction ( (ActionEvent event) -> {
             try {
@@ -163,22 +153,21 @@ public final class ButtonsPanel {
                         tree.getFileName ()
                         , tree.getFilePath ()
                         , radioButtons.getAlgorithmCheckSum ()
-                    )
-                ));
-            } catch (IllegalArgumentException ex) {
+                    )));
+            } catch (IOException ex) {
                 Alert alert = new Alert (Alert.AlertType.WARNING);
                 alert.setTitle ("Warning message box");
-                alert.setHeaderText (
-                    "The checking sum couldn't be calculate for this file"
-                );
+                alert.setHeaderText ("This file is empty.");
                 alert.showAndWait ();
             
                 Logger.getLogger (ButtonsPanel.class.getName ())
                 .log (Level.SEVERE, null, ex.getMessage ());
-            } catch (IOException ex) {
+            } catch (IllegalArgumentException ex) {
                 Alert alert = new Alert (Alert.AlertType.WARNING);
                 alert.setTitle ("Warning message box");
-                alert.setHeaderText ("This file is empty");
+                alert.setHeaderText (
+                    "The checking sum couldn't be calculate for this file."
+                );
                 alert.showAndWait ();
             
                 Logger.getLogger (ButtonsPanel.class.getName ())
@@ -192,7 +181,7 @@ public final class ButtonsPanel {
      * 
      * @return btnOpenInitDir
      */
-    public Button getOpenInitDir () {
+    public Button getOpenInitDirBtn () {
         return btnOpenInitDir;
     }
     
@@ -201,7 +190,7 @@ public final class ButtonsPanel {
      * 
      * @return btnCalculateFile
      */
-    public Button getCalculateFile () {
+    public static Button getCalculateFileBtn () {
         return btnCalculateFile;
     }
 }

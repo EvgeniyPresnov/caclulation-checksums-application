@@ -22,6 +22,8 @@ package ru.cniiag.app.gui.utility;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import javafx.scene.control.Alert;
+import ru.cniiag.app.gui.view.ButtonsPanel;
 
 /**
  * This class provides the ability to use the command line to invoke the 
@@ -30,6 +32,8 @@ import java.io.InputStreamReader;
  * @author Evgeniy Presnov
  */
 public final class CalculatorCheckSum {
+    
+    private final static String UNICODE = "UTF-8";
     
     /**
      * This method uses the parameters to calculate the checking sum of file by 
@@ -56,7 +60,7 @@ public final class CalculatorCheckSum {
         
         
         try (BufferedReader reader = new BufferedReader (new InputStreamReader (
-                process.getInputStream (), "UTF-8"))) {
+                process.getInputStream (), UNICODE))) {
             String line = "";
             /**
              * Read output from the command.
@@ -77,6 +81,18 @@ public final class CalculatorCheckSum {
          * where the first element of the array is the checking sum.
          */
         String[] splitResult = result.toString ().split (pattern);
+        
+        if (splitResult[0] == null || splitResult[0].isEmpty ()) {
+            Alert alert = new Alert (Alert.AlertType.WARNING);
+            alert.setTitle ("Warning message box");
+            alert.setHeaderText ("The file is a system file. " + ""
+                + "It is not possible to calculate the checksum for it. "
+                + "Superuser rights are required.");
+            alert.showAndWait ();
+            ButtonsPanel.getCalculateFileBtn ().setDisable (true);
+            return "";
+        }
+        ButtonsPanel.getCalculateFileBtn ().setDisable (true);
         return splitResult[0];
     }
 }
