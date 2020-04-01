@@ -22,6 +22,7 @@ package ru.cniiag.app.gui.utility;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Locale;
 import javafx.scene.control.Alert;
 import ru.cniiag.app.gui.view.ButtonsPanel;
 
@@ -34,31 +35,136 @@ import ru.cniiag.app.gui.view.ButtonsPanel;
 public final class CalculatorCheckSum {
     
     private final static String UNICODE = "UTF-8";
-    
+
     /**
      * This method uses the parameters to calculate the checking sum of file by 
-     * invoking the command from the command line.
+     * invoking the algorithm from the algorithm line.
      * 
      * @param fileName
      * @param filePath
-     * @param command
-     * @return splitResult[0] 
+     * @param algorithm
+     * @return splitString[0] 
      * @throws IOException 
      */
     public static String calculateFile (
         String fileName
         , String filePath 
-        , String command) throws IOException{
+        , String algorithm) throws IOException {
         
-        StringBuilder result = new StringBuilder ();
-
+        if (System.getProperty ("os.name").toLowerCase (Locale.getDefault ())
+            .startsWith ("windows")) {
+            
+            return calculateFileUsingWindow (filePath, algorithm);
+        }  
+        else {
+            return calculateFileUsingUnix (fileName, filePath, algorithm);
+        }
+    }
+    
+    /**
+     * Calling the mailbox if an error occurs.
+     */
+    private static void showWarningMessage () {
+        Alert alert = new Alert (Alert.AlertType.WARNING);
+        alert.setTitle ("Warning message box");
+        alert.setHeaderText ("The file is a system file. " + ""
+            + "It is not possible to calculate the checksum for it. "
+            + "Superuser rights are required.");
+        alert.showAndWait ();
+    }
+    
+    /**
+     * The method for calculating the file checksum when using Windows.
+     * 
+     * @param filePath
+     * @param algorithm
+     * @return
+     * @throws IOException 
+     */
+    private static String calculateFileUsingWindow (
+        String filePath 
+        , String algorithm) throws IOException {
+        
+        StringBuilder string = new StringBuilder ();
+        
+        String consoleCommand = "certutil -hashfile";
+        
         /**
          * The run the command from prompt command.
          */
         Process process = Runtime.getRuntime ()
-        . exec (command + " " + filePath + " " + fileName);
+        .exec (consoleCommand + " " + filePath + " " + algorithm);
+
+        try (BufferedReader reader = new BufferedReader (new InputStreamReader (
+            process.getInputStream (), UNICODE))) {
+
+            String line = "";
+            /**
+             * Read output from the command.
+             */
+            while ( (line = reader.readLine() ) != null) {
+                string.append (line);
+            }
+        }
+
+        /**
+        * Set the template to searching for the 
+        * first match in the resulting string.
+        */
+        String pattern = ":";
+
+       /**
+        * This line allows to split the string according to the pattern,
+        * where the first element of the array is the checking sum.
+        */
+        String[] splitString = string.toString ().split (pattern);
+
+        /**
+         * Information about the file checking sum is output
+         * from this index.
+         */
+        int index = 2;
+
+        /**
+         * The eight elements in the output of the file 
+         * checksum are ignored.
+         */
+        int countNeedlessElements = 8;
+
+        String result = splitString [index].substring (0 
+            , splitString [index].length () - countNeedlessElements);
+
+
+        if (result.isEmpty ()) {
+            showWarningMessage ();
+            ButtonsPanel.getCalculateFileBtn ().setDisable (true);
+            return "";
+        }
+        ButtonsPanel.getCalculateFileBtn ().setDisable (true);
+        return result;
+    }
+    
+    /**
+     * The method for calculating the file checksum when using UNIX.
+     * 
+     * @param fileName
+     * @param filePath
+     * @param algorithm
+     * @return
+     * @throws IOException 
+     */
+    private static String calculateFileUsingUnix (String fileName
+        , String filePath 
+        , String algorithm) throws IOException {
         
-        
+        StringBuilder string = new StringBuilder ();
+        /**
+         * The run the command from prompt command.
+         */
+        Process process = Runtime.getRuntime ()
+        . exec (algorithm + " " + filePath + " " + fileName);
+
+
         try (BufferedReader reader = new BufferedReader (new InputStreamReader (
                 process.getInputStream (), UNICODE))) {
             String line = "";
@@ -66,29 +172,24 @@ public final class CalculatorCheckSum {
              * Read output from the command.
              */
             while ( (line = reader.readLine() ) != null) {
-                result.append (line);
+                string.append (line);
             }
         }
-        
+
         /**
          * Set the template to searching for the 
          * first match in the resulting string.
          */
         String pattern = " ";
-        
+
         /**
          * This line allows to split the string according to the pattern,
          * where the first element of the array is the checking sum.
          */
-        String[] splitResult = result.toString ().split (pattern);
-        
+        String[] splitResult = string.toString ().split (pattern);
+
         if (splitResult[0] == null || splitResult[0].isEmpty ()) {
-            Alert alert = new Alert (Alert.AlertType.WARNING);
-            alert.setTitle ("Warning message box");
-            alert.setHeaderText ("The file is a system file. " + ""
-                + "It is not possible to calculate the checksum for it. "
-                + "Superuser rights are required.");
-            alert.showAndWait ();
+            showWarningMessage ();
             ButtonsPanel.getCalculateFileBtn ().setDisable (true);
             return "";
         }
@@ -96,3 +197,7 @@ public final class CalculatorCheckSum {
         return splitResult[0];
     }
 }
+    
+
+
+
