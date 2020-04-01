@@ -72,7 +72,9 @@ public final class ButtonsPanel {
     ) throws IOException, IllegalArgumentException {
         
         if (files == null || files.isEmpty ()) {
-            throw new IllegalArgumentException ("The invalid data");
+            throw new IllegalArgumentException (
+                "The invalid data: the file is empty."
+            );
         }
         for (File file: files) {
             table.getItems ().add (new DataModel (
