@@ -101,9 +101,6 @@ public final class DataStore {
         nameColumn.setCellValueFactory (new PropertyValueFactory<> ("Name"));
         sumColumn.setCellValueFactory (new PropertyValueFactory<> ("CheckSum"));
         
-        nameColumn.setPrefWidth (NAME_COLUMN_WIDTH);
-        sumColumn.setPrefWidth (SUM_COLUMN_WIDTH);
-        
         table.getColumns ().addAll (nameColumn, sumColumn);
         scroll.setContent (table);
     }
