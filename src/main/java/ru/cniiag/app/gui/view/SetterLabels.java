@@ -33,7 +33,7 @@ public final class SetterLabels {
      * the file system.
      */
     private final Label labelForOpenInitButton = new Label (
-        "Open the directory /home/user_name/"
+        "Open the /home directory "
     );
     
     /**
