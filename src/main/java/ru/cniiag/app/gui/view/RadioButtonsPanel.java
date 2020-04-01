@@ -20,6 +20,7 @@
 package ru.cniiag.app.gui.view;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
@@ -74,14 +75,32 @@ public final class RadioButtonsPanel extends ToggleButton {
         btnSHA384.setToggleGroup (group);
         btnSHA512.setToggleGroup (group);
         
-        map = new HashMap<String, String> () { {
-            put (btnMD5.getText (), "md5sum");
-            put (btnSHA1.getText (), "sha1sum");
-            put (btnSHA224.getText (), "sha224sum");
-            put (btnSHA256.getText (), "sha256sum");
-            put (btnSHA384.getText (), "sha384sum");
-            put (btnSHA512.getText (), "sha512sum");
-        } };
+        /**
+         * Checking for the operating system on the working machine.
+         * Depending on the operating system the commands for calculating
+         * the checksum will difference.
+         */
+        if (System.getProperty ("os.name")
+            .toLowerCase (Locale.getDefault ()).startsWith ("windows")) {
+            map = new HashMap<String, String> () { {
+                put (btnMD5.getText (), "MD5");
+                put (btnSHA1.getText (), "SHA1");
+                put (btnSHA224.getText (), "SHA224");
+                put (btnSHA256.getText (), "SHA256");
+                put (btnSHA384.getText (), "SHA384");
+                put (btnSHA512.getText (), "SHA512");
+            } };
+        }
+        else {
+            map = new HashMap<String, String> () { {
+                put (btnMD5.getText (), "md5sum");
+                put (btnSHA1.getText (), "sha1sum");
+                put (btnSHA224.getText (), "sha224sum");
+                put (btnSHA256.getText (), "sha256sum");
+                put (btnSHA384.getText (), "sha384sum");
+                put (btnSHA512.getText (), "sha512sum");
+            } };
+        }
     }
     
     /**
