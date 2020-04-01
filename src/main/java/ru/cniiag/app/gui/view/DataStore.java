@@ -46,7 +46,7 @@ public final class DataStore {
      * Set the directory where the user will select a
      * file from the file system.
      */
-    private String initDir = "/home/";
+    private String initDir = System.getProperty("user.home");
     
     /**
      * Set the file format.
@@ -63,7 +63,8 @@ public final class DataStore {
      * 
      */
     public DataStore () {
-        table.setPrefSize(TABLE_SIZE_WIDTH, TABLE_SIZE_HEIGTH);
+        table.setMinHeight(TABLE_SIZE_HEIGTH);
+        table.setMinWidth(TABLE_SIZE_WIDTH);
 
         /**
          * Creating the scroll.
@@ -102,9 +103,6 @@ public final class DataStore {
         
         nameColumn.setPrefWidth (NAME_COLUMN_WIDTH);
         sumColumn.setPrefWidth (SUM_COLUMN_WIDTH);
-        
-        table.setMinHeight(TABLE_SIZE_HEIGTH);
-        table.setMinWidth(TABLE_SIZE_WIDTH);
         
         table.getColumns ().addAll (nameColumn, sumColumn);
         scroll.setContent (table);
