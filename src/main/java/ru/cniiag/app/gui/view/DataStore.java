@@ -46,7 +46,7 @@ public final class DataStore {
      * Set the directory where the user will select a
      * file from the file system.
      */
-    private String initDir = System.getProperty("user.home");
+    private String initDir = System.getProperty ("user.home");
     
     /**
      * Set the file format.
